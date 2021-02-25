@@ -196,4 +196,24 @@ describe('SingUp Controller', () => {
     sut.handle(httpRequest)
     expect(isValidSpy).toHaveBeenCalledWith(httpRequest.body.email)
   })
+
+  test('should return 200 if valid data is provide', () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        name: 'valid_name',
+        email: 'valid_mail@mail.com',
+        password: 'valid_password',
+        passwordConfirmation: 'valid_password'
+      }
+    }
+    const httpResponde = sut.handle(httpRequest)
+    expect(httpResponde.statusCode).toBe(200)
+    expect(httpResponde.body).toEqual({
+      id: 'valid_id',
+      email: 'valid_email@email.com',
+      name: 'valid_name',
+      password: 'valid_password'
+    })
+  })
 })
