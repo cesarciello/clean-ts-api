@@ -1,9 +1,6 @@
-import { InvalidParamError } from '../errors/invalid-param-error'
-import { MissingParamError } from '../errors/missing-param-error'
+import { InvalidParamError, MissingParamError, ServerError } from '../errors'
 import { SignUpController } from './singup'
 import { EmailValidator } from '../protocols/email-validator'
-import { ServerError } from '../errors/server-error'
-
 interface SutTypes {
   sut: SignUpController
   emailValidatorStub: EmailValidator
@@ -107,7 +104,7 @@ describe('SingUp Controller', () => {
     const httpRequest = {
       body: {
         name: 'any_name',
-        email: 'invalid_mail@mail.com',
+        email: 'any_mail@mail.com',
         password: 'any_password',
         passwordConfirmation: 'any_password'
       }
