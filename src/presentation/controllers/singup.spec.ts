@@ -36,9 +36,7 @@ describe('SingUp Controller', () => {
     expect(httpResponde.statusCode).toBe(400)
     expect(httpResponde.body).toEqual(new MissingParamError('name'))
   })
-})
 
-describe('SingUp Controller', () => {
   test('should return 400 is no email is provide', () => {
     const { sut } = makeSut()
     const httpRequest = {
@@ -52,9 +50,7 @@ describe('SingUp Controller', () => {
     expect(httpResponde.statusCode).toBe(400)
     expect(httpResponde.body).toEqual(new MissingParamError('email'))
   })
-})
 
-describe('SingUp Controller', () => {
   test('should return 400 is no password is provide', () => {
     const { sut } = makeSut()
     const httpRequest = {
@@ -68,9 +64,7 @@ describe('SingUp Controller', () => {
     expect(httpResponde.statusCode).toBe(400)
     expect(httpResponde.body).toEqual(new MissingParamError('password'))
   })
-})
 
-describe('SingUp Controller', () => {
   test('should return 400 is no passwordConfirmation is provide', () => {
     const { sut } = makeSut()
     const httpRequest = {
@@ -84,9 +78,7 @@ describe('SingUp Controller', () => {
     expect(httpResponde.statusCode).toBe(400)
     expect(httpResponde.body).toEqual(new MissingParamError('passwordConfirmation'))
   })
-})
 
-describe('SingUp Controller', () => {
   test('should return 400 is invalid email is provide', () => {
     const { sut, emailValidatorStub } = makeSut()
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
@@ -101,5 +93,20 @@ describe('SingUp Controller', () => {
     const httpResponde = sut.handle(httpRequest)
     expect(httpResponde.statusCode).toBe(400)
     expect(httpResponde.body).toEqual(new InvalidParamError('email'))
+  })
+
+  test('Should call EmailValidator with correct email', () => {
+    const { sut, emailValidatorStub } = makeSut()
+    const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid')
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_mail@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password'
+      }
+    }
+    sut.handle(httpRequest)
+    expect(isValidSpy).toHaveBeenCalledWith(httpRequest.body.email)
   })
 })
