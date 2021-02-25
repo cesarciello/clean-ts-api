@@ -34,7 +34,7 @@ describe('SingUp Controller', () => {
 })
 
 describe('SingUp Controller', () => {
-  test('should return 400 is no email is provide', () => {
+  test('should return 400 is no password is provide', () => {
     const sut = new SignUpController()
     const httpRequest = {
       body: {
@@ -46,5 +46,21 @@ describe('SingUp Controller', () => {
     const httpResponde = sut.handle(httpRequest)
     expect(httpResponde.statusCode).toBe(400)
     expect(httpResponde.body).toEqual(new MissingParamError('password'))
+  })
+})
+
+describe('SingUp Controller', () => {
+  test('should return 400 is no passwordConfirmation is provide', () => {
+    const sut = new SignUpController()
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email',
+        password: 'any_password'
+      }
+    }
+    const httpResponde = sut.handle(httpRequest)
+    expect(httpResponde.statusCode).toBe(400)
+    expect(httpResponde.body).toEqual(new MissingParamError('passwordConfirmation'))
   })
 })
