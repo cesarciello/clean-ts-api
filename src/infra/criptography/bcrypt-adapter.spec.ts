@@ -16,7 +16,7 @@ describe('BCryptAdapter', () => {
     expect(hashSpy).toHaveBeenCalledWith('any_value', salt)
   })
 
-  test('should return a hashe on success', async () => {
+  test('should return a hash on success', async () => {
     const salt = 12
     const sut = new BCryptAdapter(salt)
     const hash = await sut.encrypt('any_value')
