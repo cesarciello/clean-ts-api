@@ -1,7 +1,7 @@
 import { Router } from 'express'
+import { adaptRoute } from '../adapter/express-route-adapter'
+import { makeSingupController } from '../factories/singup'
 
 export default (router: Router): void => {
-  router.post('/singup', (req, res) => {
-    res.json({ ok: 'ok' })
-  })
+  router.post('/singup', adaptRoute(makeSingupController()))
 }
