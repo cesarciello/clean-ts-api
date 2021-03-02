@@ -53,9 +53,9 @@ describe('SingUp Controller', () => {
         passwordConfirmation: 'any_password'
       }
     }
-    const httpResponde = await sut.handle(httpRequest)
-    expect(httpResponde.statusCode).toBe(400)
-    expect(httpResponde.body).toEqual(new MissingParamError('name'))
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new MissingParamError('name'))
   })
 
   test('should return 400 is no email is provide', async () => {
@@ -67,9 +67,9 @@ describe('SingUp Controller', () => {
         passwordConfirmation: 'any_password'
       }
     }
-    const httpResponde = await sut.handle(httpRequest)
-    expect(httpResponde.statusCode).toBe(400)
-    expect(httpResponde.body).toEqual(new MissingParamError('email'))
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new MissingParamError('email'))
   })
 
   test('should return 400 is no password is provide', async () => {
@@ -81,9 +81,9 @@ describe('SingUp Controller', () => {
         passwordConfirmation: 'any_password'
       }
     }
-    const httpResponde = await sut.handle(httpRequest)
-    expect(httpResponde.statusCode).toBe(400)
-    expect(httpResponde.body).toEqual(new MissingParamError('password'))
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new MissingParamError('password'))
   })
 
   test('should return 400 if password confirmation fails', async () => {
@@ -96,9 +96,9 @@ describe('SingUp Controller', () => {
         passwordConfirmation: 'invalid_password'
       }
     }
-    const httpResponde = await sut.handle(httpRequest)
-    expect(httpResponde.statusCode).toBe(400)
-    expect(httpResponde.body).toEqual(new InvalidParamError('passwordConfirmation'))
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new InvalidParamError('passwordConfirmation'))
   })
 
   test('should return 400 is no passwordConfirmation is provide', async () => {
@@ -110,9 +110,9 @@ describe('SingUp Controller', () => {
         password: 'any_password'
       }
     }
-    const httpResponde = await sut.handle(httpRequest)
-    expect(httpResponde.statusCode).toBe(400)
-    expect(httpResponde.body).toEqual(new MissingParamError('passwordConfirmation'))
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new MissingParamError('passwordConfirmation'))
   })
 
   test('should return 400 is invalid email is provide', async () => {
@@ -126,9 +126,9 @@ describe('SingUp Controller', () => {
         passwordConfirmation: 'any_password'
       }
     }
-    const httpResponde = await sut.handle(httpRequest)
-    expect(httpResponde.statusCode).toBe(400)
-    expect(httpResponde.body).toEqual(new InvalidParamError('email'))
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new InvalidParamError('email'))
   })
 
   test('should return 500 if AddAccount throws', async () => {
@@ -144,9 +144,9 @@ describe('SingUp Controller', () => {
         passwordConfirmation: 'any_password'
       }
     }
-    const httpResponde = await sut.handle(httpRequest)
-    expect(httpResponde.statusCode).toBe(500)
-    expect(httpResponde.body).toEqual(new ServerError())
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 
   test('should return 500 if EmailValidator throws', async () => {
@@ -160,9 +160,9 @@ describe('SingUp Controller', () => {
         passwordConfirmation: 'any_password'
       }
     }
-    const httpResponde = await sut.handle(httpRequest)
-    expect(httpResponde.statusCode).toBe(500)
-    expect(httpResponde.body).toEqual(new ServerError())
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 
   test('Should call AddAccount with correct values', async () => {
@@ -209,9 +209,9 @@ describe('SingUp Controller', () => {
         passwordConfirmation: 'valid_password'
       }
     }
-    const httpResponde = await sut.handle(httpRequest)
-    expect(httpResponde.statusCode).toBe(200)
-    expect(httpResponde.body).toEqual({
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual({
       id: 'valid_id',
       email: 'valid_email@email.com',
       name: 'valid_name',
