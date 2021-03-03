@@ -55,10 +55,10 @@ describe('LoginContorller', () => {
 
   test('should EmailValidator calls if corretct email', async () => {
     const { sut, emailValidatorStub } = makeSut()
-    const emailValidatorSpy = jest.spyOn(emailValidatorStub, 'isValid')
+    const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid')
     const httpRequest = makeAccountRequest()
     await sut.handle(httpRequest)
-    expect(emailValidatorSpy).toHaveBeenCalledWith(httpRequest.body.email)
+    expect(isValidSpy).toHaveBeenCalledWith(httpRequest.body.email)
   })
 
   test('should return 400 if invalid email is provided', async () => {
