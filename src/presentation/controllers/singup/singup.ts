@@ -21,12 +21,7 @@ export class SignUpController implements Controller {
         return badResquest(error)
       }
 
-      const requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
-      for (const field of requiredFields) {
-        if (!httpRequest.body[field]) {
-          return badResquest(new MissingParamError(field))
-        }
-      }
+
       const { name, email, password, passwordConfirmation } = httpRequest.body
 
       if (password !== passwordConfirmation) {

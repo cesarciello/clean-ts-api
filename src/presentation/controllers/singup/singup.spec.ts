@@ -73,38 +73,6 @@ const makeFakeRequest = (): HttpResquest => (
 )
 
 describe('SingUp Controller', () => {
-  test('should return 400 is no name is provide', async () => {
-    const { sut } = makeSut()
-    const httpRequest = makeFakeRequest()
-    delete httpRequest.body.name
-    const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse).toEqual(badResquest(new MissingParamError('name')))
-  })
-
-  test('should return 400 is no email is provide', async () => {
-    const { sut } = makeSut()
-    const httpRequest = makeFakeRequest()
-    delete httpRequest.body.email
-    const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse).toEqual(badResquest(new MissingParamError('email')))
-  })
-
-  test('should return 400 is no password is provide', async () => {
-    const { sut } = makeSut()
-    const httpRequest = makeFakeRequest()
-    delete httpRequest.body.password
-    const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse).toEqual(badResquest(new MissingParamError('password')))
-  })
-
-  test('should return 400 is no passwordConfirmation is provide', async () => {
-    const { sut } = makeSut()
-    const httpRequest = makeFakeRequest()
-    delete httpRequest.body.passwordConfirmation
-    const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse).toEqual(badResquest(new MissingParamError('passwordConfirmation')))
-  })
-
   test('should return 400 if password confirmation fails', async () => {
     const { sut } = makeSut()
     const httpRequest = {
