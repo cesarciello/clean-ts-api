@@ -166,11 +166,18 @@ describe('SingUp Controller', () => {
     expect(httpResponse).toEqual(okRequest(makeFakeAccount()))
   })
 
-  test('Should call EmailValidator with correct email', async () => {
+  test('Should call Validation with correct values', async () => {
     const { sut, validationStub } = makeSut()
     const validateSpy = jest.spyOn(validationStub, 'validate')
     const httpResquest = makeFakeRequest()
     await sut.handle(httpResquest)
     expect(validateSpy).toHaveBeenCalledWith(httpResquest.body)
+  })
+
+  test('Should return 400 if Validation returns an error', async () => {
+    const { sut, validationStub } = makeSut()
+    jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new MissingParamError('any_param'))
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(badResquest(new MissingParamError('any_param')))
   })
 })
