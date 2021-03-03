@@ -1,4 +1,4 @@
-import { InvalidParamError, MissingParamError } from '../../errors'
+import { InvalidParamError } from '../../errors'
 import { badResquest, okRequest, serverError } from '../../helpers/http-helper'
 import { Validation } from '../../helpers/validator/validation'
 import { EmailValidator, AddAccount, Controller, HttpResponse, HttpResquest } from './singup-protocols'
@@ -20,7 +20,6 @@ export class SignUpController implements Controller {
       if (error) {
         return badResquest(error)
       }
-
 
       const { name, email, password, passwordConfirmation } = httpRequest.body
 
