@@ -1,6 +1,6 @@
 import { Authentication } from '../../../domain/usescases/authentication'
 import { InvalidParamError, MissingParamError } from '../../errors'
-import { badResquest, serverError, unauthorized } from '../../helpers/http-helper'
+import { badResquest, okRequest, serverError, unauthorized } from '../../helpers/http-helper'
 import { HttpResquest } from '../../protocols'
 import { EmailValidator } from '../singup/singup-protocols'
 import { LoginController } from './login'
@@ -107,5 +107,13 @@ describe('LoginContorller', () => {
     jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const httpResponse = await sut.handle(makeAccountRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('should return 200 if Authentication aceept', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(makeAccountRequest())
+    console.log(httpResponse)
+    console.log(okRequest({ acessToken: 'any_token' }))
+    expect(httpResponse).toEqual(okRequest({ accessToken: 'any_token' }))
   })
 })
