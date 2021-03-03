@@ -89,8 +89,7 @@ describe('SingUp Controller', () => {
     const httpRequest = makeFakeRequest()
     delete httpRequest.body.passwordConfirmation
     const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new MissingParamError('passwordConfirmation'))
+    expect(httpResponse).toEqual(badResquest(new MissingParamError('passwordConfirmation')))
   })
 
   test('should return 400 if password confirmation fails', async () => {
