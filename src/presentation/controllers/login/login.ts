@@ -1,6 +1,6 @@
 import { Authentication } from '../../../domain/usescases/authentication'
 import { InvalidParamError, MissingParamError } from '../../errors'
-import { badResquest, serverError, unauthorized } from '../../helpers/http-helper'
+import { badResquest, okRequest, serverError, unauthorized } from '../../helpers/http-helper'
 import { Controller, HttpResponse, HttpResquest } from '../../protocols'
 import { EmailValidator } from '../singup/singup-protocols'
 
@@ -33,7 +33,7 @@ export class LoginController implements Controller {
         return unauthorized()
       }
 
-      return new Promise(resolve => resolve(null))
+      return okRequest({ accessToken })
     } catch (error) {
       return serverError(error)
     }
