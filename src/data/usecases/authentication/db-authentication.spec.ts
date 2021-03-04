@@ -128,7 +128,7 @@ describe('Db Authentication', () => {
     await expect(authPromise).rejects.toEqual(new Error())
   })
 
-  test('should call TokenGenarator with correct id', async () => {
+  test('should return a token on success', async () => {
     const { sut } = makeSut()
     const authenticationData = makeFakeAuthData()
     const accessToken = await sut.auth(authenticationData)
