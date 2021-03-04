@@ -1,4 +1,4 @@
-import { Authentication } from '../../../domain/usecases/authentication'
+import { Authentication, AuthenticationData } from '../../../domain/usecases/authentication'
 import { MissingParamError } from '../../errors'
 import { badResquest, okRequest, serverError, unauthorized } from '../../helpers/http/http-helper'
 import { Validation } from '../../protocols/validation'
@@ -22,7 +22,7 @@ const makeAccountRequest = (): HttpResquest => (
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth(email: string, password: string): Promise<string> {
+    async auth(authenticationData: AuthenticationData): Promise<string> {
       return new Promise(resolve => resolve('any_token'))
     }
   }
@@ -54,7 +54,7 @@ describe('LoginContorller', () => {
     const { sut, authenticationStub } = makeSut()
     const authSpy = jest.spyOn(authenticationStub, 'auth')
     await sut.handle(makeAccountRequest())
-    expect(authSpy).toHaveBeenCalledWith('any_email@mail.com', 'any_password')
+    expect(authSpy).toHaveBeenCalledWith({ email: 'any_email@mail.com', password: 'any_password' })
   })
 
   test('should return 401 if Authentication fails', async () => {
