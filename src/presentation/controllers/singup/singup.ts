@@ -1,4 +1,4 @@
-import { badResquest, okRequest, serverError } from '../../helpers/http-helper'
+import { badResquest, okRequest, serverError } from '../../helpers/http/http-helper'
 import { Validation } from '../../helpers/validator/validation'
 import { AddAccount, Controller, HttpResponse, HttpResquest } from './singup-protocols'
 
