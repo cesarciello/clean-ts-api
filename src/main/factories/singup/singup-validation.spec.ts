@@ -1,12 +1,12 @@
-import { ComparesFiledsValidation } from '../../presentation/helpers/validator/compare-fields-validation'
-import { EmailValidation } from '../../presentation/helpers/validator/email-validation'
-import { RequiredFieldValidation } from '../../presentation/helpers/validator/required-field-validation'
-import { Validation } from '../../presentation/helpers/validator/validation'
-import { ValidationComposite } from '../../presentation/helpers/validator/validation-composite'
-import { EmailValidator } from '../../presentation/protocols/email-validator'
+import { ComparesFiledsValidation } from '../../../presentation/helpers/validator/compare-fields-validation'
+import { EmailValidation } from '../../../presentation/helpers/validator/email-validation'
+import { RequiredFieldValidation } from '../../../presentation/helpers/validator/required-field-validation'
+import { Validation } from '../../../presentation/helpers/validator/validation'
+import { ValidationComposite } from '../../../presentation/helpers/validator/validation-composite'
+import { EmailValidator } from '../../../presentation/protocols/email-validator'
 import { makeSingupValidation } from './sigup-validation'
 
-jest.mock('../../presentation/helpers/validator/validation-composite')
+jest.mock('../../../presentation/helpers/validator/validation-composite')
 
 const makeEmailValidatorStub = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
