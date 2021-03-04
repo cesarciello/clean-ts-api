@@ -127,4 +127,11 @@ describe('Db Authentication', () => {
     const authPromise = sut.auth(authenticationData)
     await expect(authPromise).rejects.toEqual(new Error())
   })
+
+  test('should call TokenGenarator with correct id', async () => {
+    const { sut } = makeSut()
+    const authenticationData = makeFakeAuthData()
+    const accessToken = await sut.auth(authenticationData)
+    expect(accessToken).toBe('any_token')
+  })
 })
