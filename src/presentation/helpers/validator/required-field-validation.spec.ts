@@ -12,16 +12,20 @@ const makeSut = (): SutTypes => {
   }
 }
 
-const makeFakeInput = (): any => (
-  {
-    email: 'any_mail@mail.com'
-  }
-)
-
 describe('RequiredFieldValidation', () => {
-  test('should return an MissingParamError if no provide field', () => {
+  test('should return an MissingParamError if validation fails', () => {
     const { sut } = makeSut()
-    const error = sut.validate(makeFakeInput())
+    const error = sut.validate({
+      email: 'any_mail@mail.com'
+    })
     expect(error).toEqual(new MissingParamError('name'))
+  })
+
+  test('should not return if validation succeeds', () => {
+    const { sut } = makeSut()
+    const error = sut.validate({
+      name: 'any_name'
+    })
+    expect(error).toBeFalsy()
   })
 })
