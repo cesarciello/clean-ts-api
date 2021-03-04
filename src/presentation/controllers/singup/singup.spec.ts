@@ -3,7 +3,7 @@ import { MissingParamError, ServerError } from '../../errors'
 import { AddAccount, AddAccountModel, AccountModel } from './singup-protocols'
 import { HttpResquest } from '../../protocols'
 import { badResquest, okRequest, serverError } from '../../helpers/http/http-helper'
-import { Validation } from '../../helpers/validator/validation'
+import { Validation } from '../../protocols/validation'
 
 interface SutTypes {
   sut: SignUpController
