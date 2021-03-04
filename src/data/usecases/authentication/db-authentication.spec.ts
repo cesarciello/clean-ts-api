@@ -1,15 +1,17 @@
-import { AccountModel } from '../../../domain/models/account'
-import { AuthenticationData } from '../../../domain/usecases/authentication'
-import { HashComparer } from '../../protocols/criptograpy/hash-comparer'
-import { TokenGenerator } from '../../protocols/criptograpy/token-generator'
-import { LoadAccountByEmailRepository } from '../../protocols/db/load-account-by-email-repository'
 import { DbAuthentication } from './db-authentication'
+import { AccountModel } from '../../../domain/models/account'
+import { HashComparer } from '../../protocols/criptograpy/hash-comparer'
+import { AuthenticationData } from '../../../domain/usecases/authentication'
+import { TokenGenerator } from '../../protocols/criptograpy/token-generator'
+import { UpdateAccessTokenRepository } from '../../protocols/db/update-access-token-repository'
+import { LoadAccountByEmailRepository } from '../../protocols/db/load-account-by-email-repository'
 
 interface SutTypes {
   sut: DbAuthentication
-  loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository
   hashComparerStub: HashComparer
   tokenGeneratorStub: TokenGenerator
+  updateAccessTokenRepositoryStub: UpdateAccessTokenRepository
+  loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository
 }
 
 const makeLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
@@ -45,16 +47,27 @@ const makeTokenGenerator = (): TokenGenerator => {
   return new TokenGeneratorStub()
 }
 
+const makeUpdateAccessTokenRepository = (): UpdateAccessTokenRepository => {
+  class UpdateAccessTokenRepositoryStub implements UpdateAccessTokenRepository {
+    async update(id: string, token: string): Promise<void> {
+      return new Promise(resolve => resolve())
+    }
+  }
+  return new UpdateAccessTokenRepositoryStub()
+}
+
 const makeSut = (): SutTypes => {
   const hashComparerStub = makeHashComparer()
   const tokenGeneratorStub = makeTokenGenerator()
   const loadAccountByEmailRepositoryStub = makeLoadAccountByEmailRepository()
-  const sut = new DbAuthentication(loadAccountByEmailRepositoryStub, hashComparerStub, tokenGeneratorStub)
+  const updateAccessTokenRepositoryStub = makeUpdateAccessTokenRepository()
+  const sut = new DbAuthentication(hashComparerStub, tokenGeneratorStub, updateAccessTokenRepositoryStub, loadAccountByEmailRepositoryStub)
   return {
     sut,
     loadAccountByEmailRepositoryStub,
     hashComparerStub,
-    tokenGeneratorStub
+    tokenGeneratorStub,
+    updateAccessTokenRepositoryStub
   }
 }
 
@@ -133,5 +146,13 @@ describe('Db Authentication', () => {
     const authenticationData = makeFakeAuthData()
     const accessToken = await sut.auth(authenticationData)
     expect(accessToken).toBe('any_token')
+  })
+
+  test('should call UpdateAccessTokenRepository with correct values', async () => {
+    const { sut, updateAccessTokenRepositoryStub } = makeSut()
+    const spyUpdate = jest.spyOn(updateAccessTokenRepositoryStub, 'update')
+    const authenticationData = makeFakeAuthData()
+    await sut.auth(authenticationData)
+    expect(spyUpdate).toHaveBeenCalledWith('any_id', 'any_token')
   })
 })
