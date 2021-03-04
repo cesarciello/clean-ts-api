@@ -1,4 +1,4 @@
-import { Authentication } from '../../../domain/usescases/authentication'
+import { Authentication } from '../../../domain/usecases/authentication'
 import { InvalidParamError, MissingParamError } from '../../errors'
 import { badResquest, okRequest, serverError, unauthorized } from '../../helpers/http-helper'
 import { HttpResquest } from '../../protocols'
@@ -112,8 +112,6 @@ describe('LoginContorller', () => {
   test('should return 200 if Authentication aceept', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeAccountRequest())
-    console.log(httpResponse)
-    console.log(okRequest({ acessToken: 'any_token' }))
     expect(httpResponse).toEqual(okRequest({ accessToken: 'any_token' }))
   })
 })
