@@ -56,5 +56,18 @@ describe('Login Routes', () => {
         })
         .expect(200)
     })
+
+    test('should returns 401 on invalid credentials login', async () => {
+      app.post('/test_cors', (req, res) => {
+        res.send()
+      })
+      await request(app)
+        .post('/api/login')
+        .send({
+          email: 'maddox.gab@gmail.com',
+          password: '123'
+        })
+        .expect(401)
+    })
   })
 })
