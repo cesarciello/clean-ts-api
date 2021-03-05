@@ -1,4 +1,4 @@
-import { makeSingupValidation } from './sigup-validation'
+import { makeSingupValidation } from './sigup-validation-factory'
 import { Validation } from '../../../presentation/protocols/validation'
 import { EmailValidator } from '../../../presentation/protocols/email-validator'
 import { ComparesFiledsValidation, EmailValidation, RequiredFieldValidation, ValidationComposite } from '../../../presentation/helpers/validator'
