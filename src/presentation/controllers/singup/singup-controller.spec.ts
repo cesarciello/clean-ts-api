@@ -97,7 +97,7 @@ describe('SingUp Controller', () => {
   test('should return 200 if valid data is provide', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
-    expect(httpResponse).toEqual(okRequest(makeFakeAccount()))
+    expect(httpResponse).toEqual(okRequest({ accessToken: 'any_token' }))
   })
 
   test('Should call Validation with correct values', async () => {
