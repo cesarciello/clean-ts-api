@@ -1,8 +1,8 @@
-import { Authentication, AuthenticationData } from '../../../domain/usecases/authentication'
-import { MissingParamError } from '../../errors'
-import { badResquest, okRequest, serverError, unauthorized } from '../../helpers/http/http-helper'
-import { Validation } from '../../protocols/validation'
-import { HttpResquest } from '../../protocols'
+import { Authentication, AuthenticationData } from '../../../../domain/usecases/authentication'
+import { MissingParamError } from '../../../errors'
+import { badResquest, okRequest, serverError, unauthorized } from '../../../helpers/http/http-helper'
+import { Validation } from '../../../protocols/validation'
+import { HttpResquest } from '../../../protocols'
 import { LoginController } from './login-controller'
 
 interface SutTypes {
