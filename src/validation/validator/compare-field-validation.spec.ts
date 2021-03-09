@@ -1,4 +1,4 @@
-import { InvalidParamError } from '../../errors'
+import { InvalidParamError } from '../../presentation/errors'
 import { ComparesFiledsValidation } from './compare-fields-validation'
 
 interface SutTypes {
