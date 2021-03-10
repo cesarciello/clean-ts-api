@@ -18,7 +18,7 @@ const makeFakeSurveyData = {
   ]
 }
 
-let accountCollection: Collection
+let surveyCollection: Collection
 
 describe('Account MongoDB Repository', () => {
   beforeAll(async () => {
@@ -30,14 +30,14 @@ describe('Account MongoDB Repository', () => {
   })
 
   beforeEach(async () => {
-    accountCollection = await MongoHelper.getCollection('survey')
-    await accountCollection.deleteMany({})
+    surveyCollection = await MongoHelper.getCollection('survey')
+    await surveyCollection.deleteMany({})
   })
 
   test('should add an survey on success', async () => {
     const sut = makeSut()
     await sut.add(makeFakeSurveyData)
-    const surveyFind = await accountCollection.findOne({ question: 'any_question' })
+    const surveyFind = await surveyCollection.findOne({ question: 'any_question' })
     expect(surveyFind).toBeTruthy()
   })
 })
