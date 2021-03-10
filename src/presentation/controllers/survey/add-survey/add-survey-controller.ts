@@ -1,15 +1,21 @@
+import { AddSurvey } from '../../../../domain/usecases/add-survey'
 import { badResquest } from '../../../helpers/http/http-helper'
 import { Controller, HttpResponse, HttpResquest } from '../../../protocols'
 import { Validation } from '../../../protocols/validation'
 
 export class AddSurveyController implements Controller {
-  constructor(private readonly validation: Validation) { }
+  constructor(
+    private readonly validation: Validation,
+    private readonly addSurvey: AddSurvey
+  ) { }
 
   async handle(httpRequest: HttpResquest): Promise<HttpResponse> {
-    const validationError = this.validation.validate(httpRequest.body)
+    const { body } = httpRequest
+    const validationError = this.validation.validate(body)
     if (validationError) {
       return badResquest(validationError)
     }
+    await this.addSurvey.add(body)
     return null
   }
 }
