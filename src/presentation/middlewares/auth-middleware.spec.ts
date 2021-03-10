@@ -1,7 +1,7 @@
 import { AccessDeniedError } from '../errors'
 import { HttpResquest } from '../protocols'
 import { AuthMiddleware } from './auth-middleware'
-import { forbidden, okRequest } from '../helpers/http/http-helper'
+import { forbidden, okRequest, serverError } from '../helpers/http/http-helper'
 import { AccountModel } from '../../domain/models/account'
 import { LoadAccountByToken } from '../../domain/usecases/load-account-by-token'
 
@@ -67,6 +67,14 @@ describe('Auth MiddleWare', () => {
     const httpRequest = makeFakeResquest()
     const httpReponse = await sut.handle(httpRequest)
     expect(httpReponse).toEqual(forbidden(new AccessDeniedError()))
+  })
+
+  test('should return 500 if LoadAccountByToken throws', async () => {
+    const { sut, loadAccountByTokenStub } = makeSut()
+    jest.spyOn(loadAccountByTokenStub, 'loadByToken').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const httpRequest = makeFakeResquest()
+    const httpReponse = await sut.handle(httpRequest)
+    expect(httpReponse).toEqual(serverError(new Error()))
   })
 
   test('should return 200 if LoadAccountByToken return an account', async () => {
