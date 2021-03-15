@@ -2,7 +2,7 @@ import MockDate from 'mockdate'
 import { noContent, okRequest, serverError } from '../../../helpers/http/http-helper'
 import { SurveyModel } from '../../../../domain/models/survey'
 import { LoadSurveysController } from './load-surveys-controller'
-import { LoadSurveys } from '../../../../domain/usecases/load-surveys'
+import { LoadSurveys } from '@/domain/usecases/load-surveys'
 
 interface SutTypes {
   sut: LoadSurveysController

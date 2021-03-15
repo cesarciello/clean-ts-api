@@ -1,9 +1,9 @@
 import { DbAddAccount } from './db-add-account'
-import { Hasher } from '../../protocols/criptograpy/hasher'
-import { AddAccountRepository } from '../../protocols/db/account/add-account-repository'
-import { LoadAccountByEmailRepository } from '../../protocols/db/account/load-account-by-email-repository'
-import { AccountModel } from '../../../domain/models/account'
-import { AddAccountModel } from '../../../domain/usecases/add-account'
+import { AccountModel } from '@/domain/models/account'
+import { Hasher } from '@/data/protocols/criptograpy/hasher'
+import { AddAccountModel } from '@/domain/usecases/add-account'
+import { AddAccountRepository } from '@/data/protocols/db/account/add-account-repository'
+import { LoadAccountByEmailRepository } from '@/data/protocols/db/account/load-account-by-email-repository'
 
 interface SutTypes {
   sut: DbAddAccount

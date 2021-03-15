@@ -1,7 +1,7 @@
+import { Validation } from '@/presentation/protocols/validation'
 import { makeSingupValidation } from './sigup-validation-factory'
-import { Validation } from '../../../../../presentation/protocols/validation'
-import { EmailValidator } from '../../../../../validation/protocols/email-validator'
-import { ComparesFiledsValidation, EmailValidation, RequiredFieldValidation, ValidationComposite } from '../../../../../validation/validator'
+import { EmailValidator } from '@/validation/protocols/email-validator'
+import { ComparesFiledsValidation, EmailValidation, RequiredFieldValidation, ValidationComposite } from '@/validation/validator'
 
 jest.mock('../../../../../validation/validator/validation-composite')
 
