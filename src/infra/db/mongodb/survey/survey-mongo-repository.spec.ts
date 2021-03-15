@@ -36,10 +36,22 @@ describe('Account MongoDB Repository', () => {
     await surveyCollection.deleteMany({})
   })
 
-  test('should add an survey on success', async () => {
-    const sut = makeSut()
-    await sut.add(makeFakeSurveyData)
-    const surveyFind = await surveyCollection.findOne({ question: 'any_question' })
-    expect(surveyFind).toBeTruthy()
+  describe('add survey', () => {
+    test('should add an survey on success', async () => {
+      const sut = makeSut()
+      await sut.add(makeFakeSurveyData)
+      const surveyFind = await surveyCollection.findOne({ question: 'any_question' })
+      expect(surveyFind).toBeTruthy()
+    })
+  })
+
+  describe('loadAll survey', () => {
+    test('should return list of all surveys on success', async () => {
+      const sut = makeSut()
+      await surveyCollection.insertOne(makeFakeSurveyData)
+      const surveys = await sut.loadAll()
+      expect(surveys.length).toBe(1)
+      expect(surveys[0].question).toBe('any_question')
+    })
   })
 })
