@@ -25,7 +25,7 @@ export default {
     '!<rootDir>/src/main/**',
     '!<rootDir>/src/**/index.ts',
     '!<rootDir>/src/**/models/**',
-    '!<rootDir>/src/**/usecases/**',
+    '!<rootDir>/src/domain/usecases/**',
     '!<rootDir>/src/**/protocols/**'
   ],
 
