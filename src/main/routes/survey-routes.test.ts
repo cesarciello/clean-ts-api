@@ -23,6 +23,19 @@ const makeFakeSurveyData: AddSurveyModel = {
   date: new Date()
 }
 
+const makeAccessToken = async (): Promise<string> => {
+  const res = await accountCollection.insertOne({
+    name: 'Gabriel Maddox',
+    email: 'maddox.gab@gmail.com',
+    password: 'any_password',
+    role: 'admin'
+  })
+  const { ops: [{ _id }] } = res
+  const accessToken = sign({ id: _id }, env.jwtSecret)
+  await accountCollection.updateOne({ _id }, { $set: { accessToken } })
+  return accessToken
+}
+
 describe('Survey Routes', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
@@ -56,15 +69,7 @@ describe('Survey Routes', () => {
     })
 
     test('should returns 204 on add survey success', async () => {
-      const res = await accountCollection.insertOne({
-        name: 'Gabriel Maddox',
-        email: 'maddox.gab@gmail.com',
-        password: 'any_password',
-        role: 'admin'
-      })
-      const { ops: [{ _id }] } = res
-      const accessToken = sign({ id: _id }, env.jwtSecret)
-      await accountCollection.updateOne({ _id }, { $set: { accessToken } })
+      const accessToken = await makeAccessToken()
       await request(app)
         .post('/api/surveys')
         .set('x-access-token', accessToken)
@@ -89,17 +94,8 @@ describe('Survey Routes', () => {
     })
 
     test('should returns 200 on load surveys success', async () => {
-      const res = await accountCollection.insertOne({
-        name: 'Gabriel Maddox',
-        email: 'maddox.gab@gmail.com',
-        password: 'any_password',
-        role: 'admin'
-      })
-      const { ops: [{ _id }] } = res
-      const accessToken = sign({ id: _id }, env.jwtSecret)
-      await accountCollection.updateOne({ _id }, { $set: { accessToken } })
+      const accessToken = await makeAccessToken()
       await surveyCollection.insertOne(makeFakeSurveyData)
-
       await request(app)
         .get('/api/surveys')
         .set('x-access-token', accessToken)
