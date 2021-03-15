@@ -4,7 +4,7 @@ export interface AddSurvey {
   add: (data: AddSurveyModel) => Promise<void>
 }
 
-export interface AddSurveyModel {
+export type AddSurveyModel = {
   question: string
   answers: SurveyAnswer[]
   date: Date

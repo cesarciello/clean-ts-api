@@ -6,7 +6,7 @@ import { HashComparer } from '@/data/protocols/criptograpy/hash-comparer'
 import { UpdateAccessTokenRepository } from '@/data/protocols/db/account/update-access-token-repository'
 import { LoadAccountByEmailRepository } from '@/data/protocols/db/account/load-account-by-email-repository'
 
-interface SutTypes {
+type SutTypes = {
   sut: DbAuthentication
   hashComparerStub: HashComparer
   encrypterStub: Encrypter

@@ -1,4 +1,4 @@
-export interface AuthenticationData {
+export type AuthenticationData = {
   email: string
   password: string
 }
