@@ -53,5 +53,11 @@ describe('Account MongoDB Repository', () => {
       expect(surveys.length).toBe(1)
       expect(surveys[0].question).toBe('any_question')
     })
+
+    test('should return empty list', async () => {
+      const sut = makeSut()
+      const surveys = await sut.loadAll()
+      expect(surveys).toEqual([])
+    })
   })
 })
