@@ -1,11 +1,12 @@
 import { Collection } from 'mongodb'
+import { AddSurveyModel } from '../../../../domain/usecases/add-survey'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { SurveyMongoRepository } from './survey-mongo-repository'
 
 const makeSut = (): SurveyMongoRepository => {
   return new SurveyMongoRepository()
 }
-const makeFakeSurveyData = {
+const makeFakeSurveyData: AddSurveyModel = {
   question: 'any_question',
   answers: [
     {
@@ -15,7 +16,8 @@ const makeFakeSurveyData = {
     {
       answer: 'other_answer'
     }
-  ]
+  ],
+  date: new Date()
 }
 
 let surveyCollection: Collection
