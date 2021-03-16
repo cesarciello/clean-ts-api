@@ -1,4 +1,4 @@
-import { Authentication, AuthenticationData } from '../../../../domain/usecases/authentication'
+import { Authentication, AuthenticationData } from '../../../../domain/usecases/account/authentication'
 import { MissingParamError } from '../../../errors'
 import { badResquest, okRequest, serverError, unauthorized } from '../../../helpers/http/http-helper'
 import { Validation } from '../../../protocols/validation'

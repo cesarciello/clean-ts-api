@@ -1,5 +1,5 @@
 import { Validation } from '../../../protocols/validation'
-import { AddSurvey } from '../../../../domain/usecases/add-survey'
+import { AddSurvey } from '../../../../domain/usecases/survey/add-survey'
 import { Controller, HttpResponse, HttpResquest } from '../../../protocols'
 import { badResquest, noContent, serverError } from '../../../helpers/http/http-helper'
 

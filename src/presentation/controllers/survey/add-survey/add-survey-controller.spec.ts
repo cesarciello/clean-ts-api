@@ -2,7 +2,7 @@ import MockDate from 'mockdate'
 import { HttpResquest } from '../../../protocols'
 import { Validation } from '../../../protocols/validation'
 import { AddSurveyController } from './add-survey-controller'
-import { AddSurvey, AddSurveyModel } from '../../../../domain/usecases/add-survey'
+import { AddSurvey, AddSurveyModel } from '../../../../domain/usecases/survey/add-survey'
 import { badResquest, serverError, noContent } from '../../../helpers/http/http-helper'
 
 type SutTypes = {

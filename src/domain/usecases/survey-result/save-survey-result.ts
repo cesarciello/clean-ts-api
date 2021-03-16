@@ -1,4 +1,4 @@
-import { SurveyResultModel } from '../models/survey-result'
+import { SurveyResultModel } from '../../models/survey-result'
 
 export interface SaveSurveyResult {
   save: (data: SaveSurveyResultModel) => Promise<SurveyResultModel>

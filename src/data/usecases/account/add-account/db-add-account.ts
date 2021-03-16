@@ -1,6 +1,6 @@
 import { AccountModel } from '@/domain/models/account'
 import { Hasher } from '@/data/protocols/criptograpy/hasher'
-import { AddAccount, AddAccountModel } from '@/domain/usecases/add-account'
+import { AddAccount, AddAccountModel } from '@/domain/usecases/account/add-account'
 import { AddAccountRepository } from '@/data/protocols/db/account/add-account-repository'
 import { LoadAccountByEmailRepository } from '@/data/protocols/db/account/load-account-by-email-repository'
 

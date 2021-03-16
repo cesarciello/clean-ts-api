@@ -4,7 +4,7 @@ import request from 'supertest'
 import { sign } from 'jsonwebtoken'
 import { Collection } from 'mongodb'
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
-import { AddSurveyModel } from '@/domain/usecases/add-survey'
+import { AddSurveyModel } from '@/domain/usecases/survey/add-survey'
 
 let surveyCollection: Collection
 let accountCollection: Collection

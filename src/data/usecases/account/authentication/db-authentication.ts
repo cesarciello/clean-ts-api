@@ -1,6 +1,6 @@
 import { Encrypter } from '@/data/protocols/criptograpy/encrypter'
 import { HashComparer } from '@/data/protocols/criptograpy/hash-comparer'
-import { Authentication, AuthenticationData } from '@/domain/usecases/authentication'
+import { Authentication, AuthenticationData } from '@/domain/usecases/account/authentication'
 import { UpdateAccessTokenRepository } from '@/data/protocols/db/account/update-access-token-repository'
 import { LoadAccountByEmailRepository } from '@/data/protocols/db/account/load-account-by-email-repository'
 

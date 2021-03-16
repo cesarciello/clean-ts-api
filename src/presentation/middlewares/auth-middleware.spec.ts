@@ -3,7 +3,7 @@ import { HttpResquest } from '../protocols'
 import { AuthMiddleware } from './auth-middleware'
 import { forbidden, okRequest, serverError } from '../helpers/http/http-helper'
 import { AccountModel } from '../../domain/models/account'
-import { LoadAccountByToken } from '../../domain/usecases/load-account-by-token'
+import { LoadAccountByToken } from '../../domain/usecases/account/load-account-by-token'
 
 type SutTypes = {
   sut: AuthMiddleware

@@ -10,6 +10,7 @@ type SutTypes = {
 
 const makeFakeSurveyData = (): SurveyModel[] => ([
   {
+    id: 'any_id',
     question: 'any_question',
     answers: [
       {
@@ -20,6 +21,7 @@ const makeFakeSurveyData = (): SurveyModel[] => ([
     date: new Date()
   },
   {
+    id: 'any_id',
     question: 'any_question',
     answers: [
       {

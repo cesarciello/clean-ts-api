@@ -10,6 +10,7 @@ type SutTypes = {
 
 const makeFakeSurveyData = (): SurveyModel => (
   {
+    id: 'any_id',
     question: 'any_question',
     answers: [
       {

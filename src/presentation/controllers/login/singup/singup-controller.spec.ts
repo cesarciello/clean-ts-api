@@ -3,8 +3,8 @@ import { SignUpController } from './singup-controller'
 import { Validation } from '../../../protocols/validation'
 import { MissingParamError, ServerError, EmailInUseError } from '../../../errors'
 import { AccountModel } from '../../../../domain/models/account'
-import { AddAccount, AddAccountModel } from '../../../../domain/usecases/add-account'
-import { Authentication, AuthenticationData } from '../../../../domain/usecases/authentication'
+import { AddAccount, AddAccountModel } from '../../../../domain/usecases/account/add-account'
+import { Authentication, AuthenticationData } from '../../../../domain/usecases/account/authentication'
 import { badResquest, okRequest, serverError, forbidden } from '../../../helpers/http/http-helper'
 
 type SutTypes = {
