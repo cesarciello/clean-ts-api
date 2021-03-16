@@ -51,6 +51,7 @@ describe('Account MongoDB Repository', () => {
       await surveyCollection.insertOne(makeFakeSurveyData)
       const surveys = await sut.loadAll()
       expect(surveys.length).toBe(1)
+      expect(surveys[0].id).toBeTruthy()
       expect(surveys[0].question).toBe('any_question')
     })
 
@@ -66,14 +67,15 @@ describe('Account MongoDB Repository', () => {
       const sut = makeSut()
       const res = await surveyCollection.insertOne(makeFakeSurveyData)
       const { ops: [{ _id }] } = res
-      const surveys = await sut.loadById(_id)
-      expect(surveys.question).toBe('any_question')
+      const survey = await sut.loadById(_id)
+      expect(survey.id).toBeTruthy()
+      expect(survey.question).toBe('any_question')
     })
 
     test('should return null if no exist survey with provided id', async () => {
       const sut = makeSut()
-      const surveys = await sut.loadById('any_id')
-      expect(surveys).toEqual(null)
+      const survey = await sut.loadById('any_id')
+      expect(survey).toEqual(null)
     })
   })
 })
