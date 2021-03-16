@@ -35,7 +35,7 @@ const makeSurveyResult = async (surveyId: string, accountId: string, answer: str
   return MongoHelper.map(surveyResult)
 }
 
-const makeSurvey = async (): Promise<SurveyModel & { id: string }> => {
+const makeSurvey = async (): Promise<SurveyModel> => {
   const { ops: [survey] } = await surveyCollection.insertOne({
     question: 'any_question',
     answers: [
