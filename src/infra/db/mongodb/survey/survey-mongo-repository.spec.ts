@@ -66,7 +66,6 @@ describe('Account MongoDB Repository', () => {
       const sut = makeSut()
       const res = await surveyCollection.insertOne(makeFakeSurveyData)
       const { ops: [{ _id }] } = res
-      console.log(_id)
       const surveys = await sut.loadById(_id)
       expect(surveys.question).toBe('any_question')
     })
