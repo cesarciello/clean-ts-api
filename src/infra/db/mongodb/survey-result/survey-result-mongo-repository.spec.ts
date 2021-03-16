@@ -2,6 +2,8 @@ import { Collection } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { SaveSurveyResultModel } from '@/domain/usecases/save-survey-result'
 import { SurveyResultMongoRepository } from './survey-result-mongo-repository'
+import { SurveyResultModel } from '@/domain/models/survey-result'
+import { SurveyModel } from '@/domain/models/survey'
 
 const makeSut = (): SurveyResultMongoRepository => {
   return new SurveyResultMongoRepository()
@@ -23,7 +25,17 @@ const makeAccount = async (): Promise<string> => {
   return _id
 }
 
-const makeSurvey = async (): Promise<any> => {
+const makeSurveyResult = async (surveyId: string, accountId: string, answer: string): Promise<SurveyResultModel> => {
+  const { ops: [surveyResult] } = await accountCollection.insertOne({
+    surveyId,
+    accountId,
+    answer,
+    date: new Date()
+  })
+  return MongoHelper.map(surveyResult)
+}
+
+const makeSurvey = async (): Promise<SurveyModel & { id: string }> => {
   const { ops: [survey] } = await surveyCollection.insertOne({
     question: 'any_question',
     answers: [
@@ -37,7 +49,7 @@ const makeSurvey = async (): Promise<any> => {
     ],
     date: new Date()
   })
-  return survey
+  return MongoHelper.map(survey)
 }
 
 let surveyCollection: Collection
@@ -66,11 +78,24 @@ describe('SurveyResult Mongo Reposotory', () => {
       const sut = makeSut()
       const survey = await makeSurvey()
       const accountId = await makeAccount()
-      const surveyResult = await sut.save(makeFakeSaveSurveyData(accountId, survey._id, survey.answers[0].answer))
+      const surveyResult = await sut.save(makeFakeSaveSurveyData(accountId, survey.id, survey.answers[0].answer))
       console.log(surveyResult)
       expect(surveyResult).toBeTruthy()
       expect(surveyResult.id).toBeTruthy()
       expect(surveyResult.answer).toBe(survey.answers[0].answer)
+    })
+
+    test('should update surveyResult if there is data with accountId and surveyId', async () => {
+      const sut = makeSut()
+      const survey = await makeSurvey()
+      const accountId = await makeAccount()
+      const surveyResult = await makeSurveyResult(survey.id, accountId, survey.answers[0].answer)
+      const saveResult = await sut.save(makeFakeSaveSurveyData(accountId, survey.id, 'other_answer'))
+      console.log({ surveyResult })
+      console.log({ saveResult })
+      expect(saveResult).toBeTruthy()
+      expect(saveResult.id).toBeTruthy()
+      expect(saveResult.answer).toBe('other_answer')
     })
   })
 })
