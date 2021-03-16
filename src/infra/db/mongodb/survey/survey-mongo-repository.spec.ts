@@ -60,4 +60,21 @@ describe('Account MongoDB Repository', () => {
       expect(surveys).toEqual([])
     })
   })
+
+  describe('loadById survey', () => {
+    test('should return surveys on success', async () => {
+      const sut = makeSut()
+      const res = await surveyCollection.insertOne(makeFakeSurveyData)
+      const { ops: [{ _id }] } = res
+      console.log(_id)
+      const surveys = await sut.loadById(_id)
+      expect(surveys.question).toBe('any_question')
+    })
+
+    test('should return null if no exist survey with provided id', async () => {
+      const sut = makeSut()
+      const surveys = await sut.loadById('any_id')
+      expect(surveys).toEqual(null)
+    })
+  })
 })
