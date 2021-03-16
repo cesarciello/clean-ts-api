@@ -1,5 +1,6 @@
+import { MissingParamError } from '@/presentation/errors'
+import { forbidden } from '@/presentation/helpers/http/http-helper'
 import { LoadSurveyById } from '@/domain/usecases/survey/load-survey-by-id'
-import { unauthorized } from '@/presentation/helpers/http/http-helper'
 import { Controller, HttpResponse, HttpResquest } from '@/presentation/protocols'
 
 export class SaveSurveyResultController implements Controller {
@@ -9,7 +10,7 @@ export class SaveSurveyResultController implements Controller {
     const { surveyId } = httpRequest.params
     const survey = await this.loadSurveyById.loadById(surveyId)
     if (!survey) {
-      return unauthorized()
+      return forbidden(new MissingParamError('surveyId'))
     }
     return null
   }

@@ -1,7 +1,8 @@
 import { SurveyModel } from '@/domain/models/survey'
-import { LoadSurveyById } from '@/domain/usecases/survey/load-survey-by-id'
-import { unauthorized } from '@/presentation/helpers/http/http-helper'
 import { HttpResquest } from '@/presentation/protocols'
+import { MissingParamError } from '@/presentation/errors'
+import { forbidden } from '@/presentation/helpers/http/http-helper'
+import { LoadSurveyById } from '@/domain/usecases/survey/load-survey-by-id'
 import { SaveSurveyResultController } from './save-survey-result-controller'
 
 type SutTypes = {
@@ -57,6 +58,6 @@ describe('SaveSurveyresultController', () => {
     const { sut, loadSurveyByIdStub } = makeSut()
     jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(null)
     const httpResponse = await sut.handle(makeFakeRequest)
-    expect(httpResponse).toEqual(unauthorized())
+    expect(httpResponse).toEqual(forbidden(new MissingParamError('surveyId')))
   })
 })
