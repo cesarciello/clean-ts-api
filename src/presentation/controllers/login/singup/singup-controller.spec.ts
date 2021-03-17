@@ -33,9 +33,7 @@ const mockRequest = (): HttpResquest => ({ body: mockAddAccountWithConfirmationP
 describe('SingUp Controller', () => {
   test('should return 500 if AddAccount throws', async () => {
     const { sut, addAccountStub } = makeSut()
-    jest.spyOn(addAccountStub, 'add').mockImplementationOnce(async () => {
-      return new Promise((resolve, reject) => reject(new ServerError(null)))
-    })
+    jest.spyOn(addAccountStub, 'add').mockRejectedValueOnce(new ServerError(null))
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })

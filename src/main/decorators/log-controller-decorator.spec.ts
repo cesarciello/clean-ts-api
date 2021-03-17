@@ -14,7 +14,7 @@ type SutTypes = {
 const makeController = (): Controller => {
   class ControllerStub implements Controller {
     async handle(httpRequest: HttpResquest): Promise<HttpResponse> {
-      return new Promise(resolve => resolve(okRequest(mockAccountModel())))
+      return Promise.resolve(okRequest(mockAccountModel()))
     }
   }
   return new ControllerStub()
