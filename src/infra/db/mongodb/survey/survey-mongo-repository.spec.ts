@@ -1,4 +1,4 @@
-import { Collection } from 'mongodb'
+import { Collection, ObjectId } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { AddSurveyModel } from '@/domain/usecases/survey/add-survey'
 import { SurveyMongoRepository } from './survey-mongo-repository'
@@ -74,7 +74,7 @@ describe('Account MongoDB Repository', () => {
 
     test('should return null if no exist survey with provided id', async () => {
       const sut = makeSut()
-      const survey = await sut.loadById('any_id')
+      const survey = await sut.loadById(new ObjectId().toHexString())
       expect(survey).toEqual(null)
     })
   })
