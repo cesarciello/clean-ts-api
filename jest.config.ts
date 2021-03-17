@@ -26,7 +26,8 @@ export default {
     '!<rootDir>/src/**/index.ts',
     '!<rootDir>/src/**/models/**',
     '!<rootDir>/src/domain/usecases/**',
-    '!<rootDir>/src/**/protocols/**'
+    '!<rootDir>/src/**/protocols/**',
+    '!**/test/**'
   ],
 
   // The directory where Jest should output its coverage files

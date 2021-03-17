@@ -1,25 +1,17 @@
-import { AccessDeniedError } from '../errors'
 import { HttpResquest } from '../protocols'
+import { AccessDeniedError } from '../errors'
 import { AuthMiddleware } from './auth-middleware'
+import { mockAccountByTokenRepository } from '@/data/test'
 import { forbidden, okRequest, serverError } from '../helpers/http/http-helper'
-import { AccountModel } from '../../domain/models/account'
-import { LoadAccountByToken } from '../../domain/usecases/account/load-account-by-token'
+import { LoadAccountByToken } from '@/domain/usecases/account/load-account-by-token'
 
 type SutTypes = {
   sut: AuthMiddleware
   loadAccountByTokenStub: LoadAccountByToken
 }
-const makeLoadAccountByToken = (): LoadAccountByToken => {
-  class LoadAccountByTokenStub implements LoadAccountByToken {
-    async loadByToken(token: string, role?: string): Promise<AccountModel> {
-      return new Promise(resolve => resolve(makeFakeAccount()))
-    }
-  }
-  return new LoadAccountByTokenStub()
-}
 
 const makeSut = (role?: string): SutTypes => {
-  const loadAccountByTokenStub = makeLoadAccountByToken()
+  const loadAccountByTokenStub = mockAccountByTokenRepository()
   const sut = new AuthMiddleware(loadAccountByTokenStub, role)
   return {
     sut,
@@ -32,15 +24,6 @@ const makeFakeResquest = (): HttpResquest => (
     headers: {
       'x-access-token': 'any_token'
     }
-  }
-)
-
-const makeFakeAccount = (): AccountModel => (
-  {
-    id: 'any_id',
-    email: 'any_mail@mail.com',
-    name: 'any_name',
-    password: 'hash_password'
   }
 )
 
@@ -72,7 +55,7 @@ describe('Auth MiddleWare', () => {
 
   test('should return 500 if LoadAccountByToken throws', async () => {
     const { sut, loadAccountByTokenStub } = makeSut()
-    jest.spyOn(loadAccountByTokenStub, 'loadByToken').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    jest.spyOn(loadAccountByTokenStub, 'loadByToken').mockRejectedValueOnce(new Error())
     const httpRequest = makeFakeResquest()
     const httpReponse = await sut.handle(httpRequest)
     expect(httpReponse).toEqual(serverError(new Error()))

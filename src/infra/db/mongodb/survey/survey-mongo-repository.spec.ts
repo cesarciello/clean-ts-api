@@ -1,23 +1,10 @@
 import { Collection, ObjectId } from 'mongodb'
+import { mockAddSurveyParams } from '@/domain/test'
 import { MongoHelper } from '../helpers/mongo-helper'
-import { AddSurveyParams } from '@/domain/usecases/survey/add-survey'
 import { SurveyMongoRepository } from './survey-mongo-repository'
 
 const makeSut = (): SurveyMongoRepository => {
   return new SurveyMongoRepository()
-}
-const makeFakeSurveyData: AddSurveyParams = {
-  question: 'any_question',
-  answers: [
-    {
-      image: 'any_image',
-      answer: 'any_answer'
-    },
-    {
-      answer: 'other_answer'
-    }
-  ],
-  date: new Date()
 }
 
 let surveyCollection: Collection
@@ -39,7 +26,7 @@ describe('Account MongoDB Repository', () => {
   describe('add survey', () => {
     test('should add an survey on success', async () => {
       const sut = makeSut()
-      await sut.add(makeFakeSurveyData)
+      await sut.add(mockAddSurveyParams())
       const surveyFind = await surveyCollection.findOne({ question: 'any_question' })
       expect(surveyFind).toBeTruthy()
     })
@@ -48,7 +35,7 @@ describe('Account MongoDB Repository', () => {
   describe('loadAll survey', () => {
     test('should return list of all surveys on success', async () => {
       const sut = makeSut()
-      await surveyCollection.insertOne(makeFakeSurveyData)
+      await surveyCollection.insertOne(mockAddSurveyParams())
       const surveys = await sut.loadAll()
       expect(surveys.length).toBe(1)
       expect(surveys[0].id).toBeTruthy()
@@ -65,7 +52,7 @@ describe('Account MongoDB Repository', () => {
   describe('loadById survey', () => {
     test('should return surveys on success', async () => {
       const sut = makeSut()
-      const res = await surveyCollection.insertOne(makeFakeSurveyData)
+      const res = await surveyCollection.insertOne(mockAddSurveyParams())
       const { ops: [{ _id }] } = res
       const survey = await sut.loadById(_id)
       expect(survey.id).toBeTruthy()

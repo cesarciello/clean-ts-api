@@ -3,25 +3,11 @@ import env from '@/main/config/env'
 import request from 'supertest'
 import { sign } from 'jsonwebtoken'
 import { Collection } from 'mongodb'
+import { mockAddSurveyParams } from '@/domain/test'
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
-import { AddSurveyParams } from '@/domain/usecases/survey/add-survey'
 
 let surveyCollection: Collection
 let accountCollection: Collection
-
-const makeFakeSurveyData: AddSurveyParams = {
-  question: 'any_question',
-  answers: [
-    {
-      image: 'any_image',
-      answer: 'any_answer'
-    },
-    {
-      answer: 'other_answer'
-    }
-  ],
-  date: new Date()
-}
 
 const makeAccessToken = async (): Promise<string> => {
   const res = await accountCollection.insertOne({
@@ -95,7 +81,7 @@ describe('Survey Routes', () => {
 
     test('should returns 200 on load surveys success', async () => {
       const accessToken = await makeAccessToken()
-      await surveyCollection.insertOne(makeFakeSurveyData)
+      await surveyCollection.insertOne(mockAddSurveyParams())
       await request(app)
         .get('/api/surveys')
         .set('x-access-token', accessToken)
