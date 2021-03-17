@@ -26,7 +26,7 @@ const makeAccount = async (): Promise<string> => {
 }
 
 const makeSurveyResult = async (surveyId: string, accountId: string, answer: string): Promise<SurveyResultModel> => {
-  const { ops: [surveyResult] } = await accountCollection.insertOne({
+  const { ops: [surveyResult] } = await surveyResultCollection.insertOne({
     surveyId,
     accountId,
     answer,
