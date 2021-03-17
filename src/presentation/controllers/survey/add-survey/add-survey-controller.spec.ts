@@ -1,9 +1,9 @@
 import MockDate from 'mockdate'
-import { HttpResquest } from '../../../protocols'
-import { Validation } from '../../../protocols/validation'
+import { HttpResquest } from '@/presentation/protocols'
 import { AddSurveyController } from './add-survey-controller'
-import { AddSurvey, AddSurveyModel } from '../../../../domain/usecases/survey/add-survey'
-import { badResquest, serverError, noContent } from '../../../helpers/http/http-helper'
+import { Validation } from '@/presentation/protocols/validation'
+import { AddSurvey, AddSurveyParams } from '@/domain/usecases/survey/add-survey'
+import { badResquest, noContent, serverError } from '@/presentation/helpers/http/http-helper'
 
 type SutTypes = {
   sut: AddSurveyController
@@ -22,7 +22,7 @@ const makeValidation = (): Validation => {
 
 const makeAddSurvey = (): any => {
   class AddSurveyStub implements AddSurvey {
-    async add(data: AddSurveyModel): Promise<void> {
+    async add(data: AddSurveyParams): Promise<void> {
       return new Promise(resolve => resolve())
     }
   }

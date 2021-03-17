@@ -1,11 +1,11 @@
-import { HttpResquest } from '../../../protocols'
+import { AccountModel } from '@/domain/models/account'
 import { SignUpController } from './singup-controller'
-import { Validation } from '../../../protocols/validation'
-import { MissingParamError, ServerError, EmailInUseError } from '../../../errors'
-import { AccountModel } from '../../../../domain/models/account'
-import { AddAccount, AddAccountModel } from '../../../../domain/usecases/account/add-account'
-import { Authentication, AuthenticationData } from '../../../../domain/usecases/account/authentication'
-import { badResquest, okRequest, serverError, forbidden } from '../../../helpers/http/http-helper'
+import { HttpResquest } from '@/presentation/protocols'
+import { Validation } from '@/presentation/protocols/validation'
+import { AddAccount, AddAccountParams } from '@/domain/usecases/account/add-account'
+import { Authentication, AuthenticationParams } from '@/domain/usecases/account/authentication'
+import { EmailInUseError, MissingParamError, ServerError } from '@/presentation/errors'
+import { badResquest, forbidden, okRequest, serverError } from '@/presentation/helpers/http/http-helper'
 
 type SutTypes = {
   sut: SignUpController
@@ -15,7 +15,7 @@ type SutTypes = {
 }
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth(authenticationData: AuthenticationData): Promise<string> {
+    async auth(authenticationData: AuthenticationParams): Promise<string> {
       return new Promise(resolve => resolve('any_token'))
     }
   }
@@ -23,7 +23,7 @@ const makeAuthentication = (): Authentication => {
 }
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
-    async add(account: AddAccountModel): Promise<AccountModel> {
+    async add(account: AddAccountParams): Promise<AccountModel> {
       return new Promise(resolve => resolve(makeFakeAccount()))
     }
   }

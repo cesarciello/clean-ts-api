@@ -1,9 +1,9 @@
-import { Authentication, AuthenticationData } from '../../../../domain/usecases/account/authentication'
-import { MissingParamError } from '../../../errors'
-import { badResquest, okRequest, serverError, unauthorized } from '../../../helpers/http/http-helper'
-import { Validation } from '../../../protocols/validation'
-import { HttpResquest } from '../../../protocols'
 import { LoginController } from './login-controller'
+import { HttpResquest } from '@/presentation/protocols'
+import { MissingParamError } from '@/presentation/errors'
+import { Validation } from '@/presentation/protocols/validation'
+import { Authentication, AuthenticationParams } from '@/domain/usecases/account/authentication'
+import { badResquest, okRequest, serverError, unauthorized } from '@/presentation/helpers/http/http-helper'
 
 type SutTypes = {
   sut: LoginController
@@ -22,7 +22,7 @@ const makeAccountRequest = (): HttpResquest => (
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth(authenticationData: AuthenticationData): Promise<string> {
+    async auth(authenticationData: AuthenticationParams): Promise<string> {
       return new Promise(resolve => resolve('any_token'))
     }
   }
