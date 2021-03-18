@@ -10,6 +10,7 @@
     "watch": "tsc -w -p tsconfig-build.json",
     "down": "docker-compose down",
     "up": "npm run build && docker-compose up",
+    "up:watch": "npm run watch && docker-compose up",
     "dev": "sucrase-node src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
