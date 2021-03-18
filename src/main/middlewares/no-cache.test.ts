@@ -8,7 +8,7 @@ describe('noCache Middleware', () => {
       res.send()
     })
     await request(app)
-      .post('/test_cors')
+      .post('/test_noCache')
       .expect('cache-control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
       .expect('pragma', 'no-cache')
       .expect('expires', '0')
