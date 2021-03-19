@@ -58,6 +58,7 @@ describe('SurveyResult Mongo Reposotory', () => {
     accountCollection = await MongoHelper.getCollection('account')
     await accountCollection.deleteMany({})
   })
+
   describe('save SurveyResult', () => {
     test('should insert new surveyResult if there is no data with accountId and surveyId', async () => {
       const sut = makeSut()
@@ -83,6 +84,47 @@ describe('SurveyResult Mongo Reposotory', () => {
       expect(saveResult.answers[0].count).toBe(1)
       expect(saveResult.answers[0].percent).toBe(100)
       expect(saveResult.answers[0].answer).toBe(survey.answers[1].answer)
+    })
+  })
+
+  describe('load by SurveyId', () => {
+    test('should load survey result', async () => {
+      const sut = makeSut()
+      const survey = await makeSurvey()
+      const accountId = await makeAccount()
+      await surveyResultCollection.insertMany([
+        {
+          surveyId: new ObjectId(survey.id),
+          accountId: new ObjectId(accountId),
+          answer: survey.answers[0].answer,
+          date: survey.date
+        },
+        {
+          surveyId: new ObjectId(survey.id),
+          accountId: new ObjectId(accountId),
+          answer: survey.answers[1].answer,
+          date: survey.date
+        },
+        {
+          surveyId: new ObjectId(survey.id),
+          accountId: new ObjectId(accountId),
+          answer: survey.answers[1].answer,
+          date: survey.date
+        },
+        {
+          surveyId: new ObjectId(survey.id),
+          accountId: new ObjectId(accountId),
+          answer: survey.answers[1].answer,
+          date: survey.date
+        }
+      ])
+      const saveResult = await sut.loadBySurveyId(survey.id)
+      expect(saveResult).toBeTruthy()
+      expect(saveResult.surveyId).toEqual(survey.id)
+      expect(saveResult.answers[0].count).toBe(3)
+      expect(saveResult.answers[0].percent).toBe(75)
+      expect(saveResult.answers[1].count).toBe(1)
+      expect(saveResult.answers[1].percent).toBe(25)
     })
   })
 })
