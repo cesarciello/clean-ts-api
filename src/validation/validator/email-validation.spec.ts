@@ -17,7 +17,7 @@ const makeSut = (): SutTypes => {
   }
 }
 
-const makeFakeInput = (): any => (
+const mockInput = (): any => (
   {
     email: 'any_mail@mail.com'
   }
@@ -27,7 +27,7 @@ describe('EmailValidation', () => {
   test('should return an error if invalid email is provide', () => {
     const { sut, emailValidatorStub } = makeSut()
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
-    const error = sut.validate(makeFakeInput())
+    const error = sut.validate(mockInput())
     expect(error).toEqual(new InvalidParamError('email'))
   })
 
@@ -40,7 +40,7 @@ describe('EmailValidation', () => {
   test('Should call EmailValidator with correct email', () => {
     const { sut, emailValidatorStub } = makeSut()
     const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid')
-    sut.validate(makeFakeInput())
+    sut.validate(mockInput())
     expect(isValidSpy).toHaveBeenCalledWith('any_mail@mail.com')
   })
 })

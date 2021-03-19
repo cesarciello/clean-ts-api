@@ -33,7 +33,7 @@ const makeSut = (): SutTypes => {
 
 const mockRequest = (): HttpResquest => ({ body: mockAddAccountWithConfirmationParams() })
 
-const makeFakeReponseError = (): HttpResponse => {
+const mockReponseError = (): HttpResponse => {
   const fakeError = new Error()
   fakeError.stack = 'any_stack'
   const error = serverError(fakeError)
@@ -56,7 +56,7 @@ describe('Log Controller Decorator', () => {
 
   test('should call LogErrorRepository with correct error if controller returns server error', async () => {
     const { sut, controllerStub, logErrorRepositoryStub } = makeSut()
-    const error = makeFakeReponseError()
+    const error = mockReponseError()
     const logSpy = jest.spyOn(logErrorRepositoryStub, 'logError')
     jest.spyOn(controllerStub, 'handle').mockResolvedValueOnce(error)
     await sut.handle(mockRequest())
