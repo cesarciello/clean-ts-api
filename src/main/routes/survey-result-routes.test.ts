@@ -103,5 +103,16 @@ describe('Survey Result Routes', () => {
         .get('/api/surveys/any_id/results')
         .expect(403)
     })
+
+    test('should returns 200 on load survey result success', async () => {
+      const account = await makeFakeAccount()
+      const survey = await makeFakeSurvey()
+      await makeFakeSurveyResult(survey.id, account.id, survey.answers[0].answer)
+
+      await request(app)
+        .get(`/api/surveys/${survey.id}/results`)
+        .set('x-access-token', account.accessToken)
+        .expect(200)
+    })
   })
 })
