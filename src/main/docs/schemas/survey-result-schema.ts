@@ -1,20 +1,20 @@
 export const surveyResultSchema = {
   type: 'object',
   properties: {
-    id: {
+    question: {
       type: 'string'
     },
-    accountId: {
+    date: {
       type: 'string'
     },
     surveyId: {
       type: 'string'
     },
-    answer: {
-      type: 'string'
-    },
-    date: {
-      type: 'string'
+    answers: {
+      type: 'array',
+      items: {
+        $ref: '#/schemas/surveyResultsAnswer'
+      }
     }
   }
 }
