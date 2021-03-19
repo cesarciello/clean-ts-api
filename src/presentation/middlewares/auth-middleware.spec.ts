@@ -36,6 +36,12 @@ describe('Auth MiddleWare', () => {
     expect(httpReponse).toEqual(forbidden(new AccessDeniedError()))
   })
 
+  test('should return 403 if no httpRequest exists', async () => {
+    const { sut } = makeSut()
+    const httpReponse = await sut.handle(null)
+    expect(httpReponse).toEqual(forbidden(new AccessDeniedError()))
+  })
+
   test('should call LoadAccountByToken with correct values', async () => {
     const role = 'any_role'
     const { sut, loadAccountByTokenStub } = makeSut(role)
