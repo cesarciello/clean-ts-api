@@ -64,13 +64,12 @@ describe('SurveyResult Mongo Reposotory', () => {
       const sut = makeSut()
       const survey = await makeSurvey()
       const accountId = await makeAccount()
-      const saveResult = await sut.save(makeFakeSaveSurveyData(accountId, survey.id, survey.answers[0].answer))
+      await sut.save(makeFakeSaveSurveyData(accountId, survey.id, survey.answers[0].answer))
+      const saveResult = await surveyResultCollection.findOne({
+        accountId,
+        surveyId: survey.id
+      })
       expect(saveResult).toBeTruthy()
-      expect(saveResult.surveyId).toEqual(survey.id)
-      expect(saveResult.answers[0].count).toBe(1)
-      expect(saveResult.answers[0].percent).toBe(100)
-      expect(saveResult.answers[1].count).toBe(0)
-      expect(saveResult.answers[1].percent).toBe(0)
     })
 
     test('should update surveyResult if there is data with accountId and surveyId', async () => {
@@ -78,12 +77,13 @@ describe('SurveyResult Mongo Reposotory', () => {
       const survey = await makeSurvey()
       const accountId = await makeAccount()
       await makeSurveyResult(survey.id, accountId, survey.answers[0].answer)
-      const saveResult = await sut.save(makeFakeSaveSurveyData(accountId, survey.id, survey.answers[1].answer))
+      await sut.save(makeFakeSaveSurveyData(accountId, survey.id, survey.answers[1].answer))
+      const saveResult = await surveyResultCollection.find({
+        accountId,
+        surveyId: survey.id
+      }).toArray()
       expect(saveResult).toBeTruthy()
-      expect(saveResult.surveyId).toEqual(survey.id)
-      expect(saveResult.answers[0].count).toBe(1)
-      expect(saveResult.answers[0].percent).toBe(100)
-      expect(saveResult.answers[0].answer).toBe(survey.answers[1].answer)
+      expect(saveResult.length).toEqual(1)
     })
   })
 
