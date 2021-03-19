@@ -91,6 +91,13 @@ describe('SurveyResult Mongo Reposotory', () => {
     test('should load survey result', async () => {
       const sut = makeSut()
       const survey = await makeSurvey()
+      const saveResult = await sut.loadBySurveyId(survey.id)
+      expect(saveResult).toBeNull()
+    })
+
+    test('should load survey result', async () => {
+      const sut = makeSut()
+      const survey = await makeSurvey()
       const accountId = await makeAccount()
       await surveyResultCollection.insertMany([
         {
