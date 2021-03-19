@@ -68,6 +68,8 @@ describe('SurveyResult Mongo Reposotory', () => {
       expect(saveResult.surveyId).toEqual(survey.id)
       expect(saveResult.answers[0].count).toBe(1)
       expect(saveResult.answers[0].percent).toBe(100)
+      expect(saveResult.answers[1].count).toBe(0)
+      expect(saveResult.answers[1].percent).toBe(0)
     })
 
     test('should update surveyResult if there is data with accountId and surveyId', async () => {
