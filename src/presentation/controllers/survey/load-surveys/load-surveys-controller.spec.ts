@@ -1,9 +1,12 @@
 import MockDate from 'mockdate'
 import { mockSurveyModelList } from '@/domain/test'
+import { mockLoadSurveys } from '@/presentation/test'
+import { HttpResquest } from '@/presentation/protocols'
 import { LoadSurveysController } from './load-surveys-controller'
 import { LoadSurveys } from '@/domain/usecases/survey/load-surveys'
-import { mockLoadSurveys } from '@/presentation/test'
 import { noContent, okRequest, serverError } from '../../../helpers/http/http-helper'
+
+const mockRequest = (): HttpResquest => ({ accountId: 'any_accountId' })
 
 type SutTypes = {
   sut: LoadSurveysController
@@ -28,30 +31,30 @@ describe('LoadSurveysController', () => {
     MockDate.reset()
   })
 
-  test('should call LoadSurveys', async () => {
+  test('should call LoadSurveys with correct value', async () => {
     const { sut, loadSurveysStub } = makeSut()
     const loadSpy = jest.spyOn(loadSurveysStub, 'load')
-    await sut.handle({})
-    expect(loadSpy).toHaveBeenCalled()
+    await sut.handle(mockRequest())
+    expect(loadSpy).toHaveBeenCalledWith('any_accountId')
   })
 
   test('should return 200 on success', async () => {
     const { sut } = makeSut()
-    const httpResponse = await sut.handle({})
+    const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(okRequest(mockSurveyModelList()))
   })
 
   test('should return 500 if LoadSurveys throws', async () => {
     const { sut, loadSurveysStub } = makeSut()
     jest.spyOn(loadSurveysStub, 'load').mockRejectedValueOnce(new Error())
-    const httpResponse = await sut.handle({})
+    const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })
 
   test('should return 204 if LoadSurveys return empty', async () => {
     const { sut, loadSurveysStub } = makeSut()
     jest.spyOn(loadSurveysStub, 'load').mockResolvedValueOnce([])
-    const httpResponse = await sut.handle({})
+    const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(noContent())
   })
 })
