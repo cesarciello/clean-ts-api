@@ -27,8 +27,8 @@ export class SignUpController implements Controller {
       if (!account) {
         return forbidden(new EmailInUseError())
       }
-      const accessToken = await this.authentication.auth({ email, password })
-      return okRequest({ accessToken })
+      const authentication = await this.authentication.auth({ email, password })
+      return okRequest(authentication)
     } catch (error) {
       return serverError(error)
     }

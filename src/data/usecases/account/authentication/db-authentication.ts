@@ -3,6 +3,7 @@ import { HashComparer } from '@/data/protocols/criptography/hash-comparer'
 import { Authentication, AuthenticationParams } from '@/domain/usecases/account/authentication'
 import { UpdateAccessTokenRepository } from '@/data/protocols/db/account/update-access-token-repository'
 import { LoadAccountByEmailRepository } from '@/data/protocols/db/account/load-account-by-email-repository'
+import { AuthenticationModel } from '@/domain/models/authentication'
 
 export class DbAuthentication implements Authentication {
   constructor(
@@ -13,7 +14,7 @@ export class DbAuthentication implements Authentication {
   ) {
   }
 
-  async auth(authenticationData: AuthenticationParams): Promise<string> {
+  async auth(authenticationData: AuthenticationParams): Promise<AuthenticationModel> {
     const { email, password } = authenticationData
     const account = await this.loadAccountByEmailRepository.loadByEmail(email)
     if (account) {
@@ -21,7 +22,10 @@ export class DbAuthentication implements Authentication {
       if (isPasswordEqual) {
         const accessToken = await this.encrypter.encrypt(account.id)
         await this.updateAccessTokenRepository.updateAccessToken(account.id, accessToken)
-        return accessToken
+        return {
+          name: account.name,
+          accessToken
+        }
       }
     }
     return null
