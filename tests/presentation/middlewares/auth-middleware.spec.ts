@@ -1,8 +1,8 @@
 import { HttpResquest } from '@/presentation/protocols'
 import { AccessDeniedError } from '@/presentation/errors'
-import { AuthMiddleware } from '@/presentation/middlewares/auth-middleware'
+import { AuthMiddleware } from '@/presentation/middlewares'
 import { forbidden, okRequest, serverError } from '@/presentation/helpers/http/http-helper'
-import { LoadAccountByToken } from '@/domain/usecases/account/load-account-by-token'
+import { LoadAccountByToken } from '@/domain/usecases/account'
 import { mockAccountByTokenRepository } from '../../data/mock'
 
 type SutTypes = {

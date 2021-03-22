@@ -1,5 +1,5 @@
 import { Validation } from '@/presentation/protocols/validation'
-import { makeLoginValidation } from '@/main/factories/controllers/login/login/login-validation-factory'
+import { makeLoginValidation } from '@/main/factories/controllers/login'
 import { EmailValidation, RequiredFieldValidation, ValidationComposite } from '@/validation/validator'
 import { mockEmailValidatorStub } from '@/tests/validation/mock'
 

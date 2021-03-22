@@ -1,9 +1,9 @@
 import { Collection, ObjectId } from 'mongodb'
 import { SurveyModel } from '@/domain/models/survey'
 import { SurveyResultModel } from '@/domain/models/survey-result'
-import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
-import { SaveSurveyResultParams } from '@/domain/usecases/survey-result/save-survey-result'
-import { SurveyResultMongoRepository } from '@/infra/db/mongodb/survey-result/survey-result-mongo-repository'
+import { MongoHelper } from '@/infra/db/mongodb/helpers'
+import { SaveSurveyResultParams } from '@/domain/usecases/survey-result'
+import { SurveyResultMongoRepository } from '@/infra/db/mongodb/survey-result'
 import { mockAddAccountParams, mockSurveyModel } from '@/tests/domain/mock'
 
 const makeSut = (): SurveyResultMongoRepository => {

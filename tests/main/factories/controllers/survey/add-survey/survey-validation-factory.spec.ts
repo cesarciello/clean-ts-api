@@ -1,4 +1,4 @@
-import { makeAddSuveyValidation } from '@/main/factories/controllers/survey/add-survey/add-survey-validation-factory'
+import { makeAddSuveyValidation } from '@/main/factories/controllers/survey'
 import { Validation } from '@/presentation/protocols/validation'
 import { RequiredFieldValidation, ValidationComposite } from '@/validation/validator'
 

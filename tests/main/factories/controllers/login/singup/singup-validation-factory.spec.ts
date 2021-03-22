@@ -1,5 +1,5 @@
 import { Validation } from '@/presentation/protocols/validation'
-import { makeSingupValidation } from '@/main/factories/controllers/login/singup/sigup-validation-factory'
+import { makeSingupValidation } from '@/main/factories/controllers/login'
 import { ComparesFiledsValidation, EmailValidation, RequiredFieldValidation, ValidationComposite } from '@/validation/validator'
 import { mockEmailValidatorStub } from '@/tests/validation/mock'
 

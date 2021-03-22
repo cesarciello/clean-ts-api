@@ -1,7 +1,7 @@
 import { Collection, ObjectId } from 'mongodb'
 import { SurveyResultModel } from '@/domain/models/survey-result'
-import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
-import { SurveyMongoRepository } from '@/infra/db/mongodb/survey/survey-mongo-repository'
+import { MongoHelper } from '@/infra/db/mongodb/helpers'
+import { SurveyMongoRepository } from '@/infra/db/mongodb/survey'
 import { mockAddAccountParams, mockAddSurveyParams } from '@/tests/domain/mock'
 
 const makeAccount = async (): Promise<string> => {

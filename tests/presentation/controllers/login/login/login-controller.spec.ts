@@ -1,4 +1,4 @@
-import { LoginController } from '@/presentation/controllers/login/login/login-controller'
+import { LoginController } from '@/presentation/controllers/login'
 import { HttpResquest } from '@/presentation/protocols'
 import { MissingParamError } from '@/presentation/errors'
 import { Validation } from '@/presentation/protocols/validation'

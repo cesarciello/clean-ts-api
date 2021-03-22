@@ -1,7 +1,7 @@
 import { mockLogErrorRepository } from '../../data/mock'
-import { LogControllerDecorator } from '@/main/decorators/log-controller-decorator'
+import { LogControllerDecorator } from '@/main/decorators'
 import { okRequest, serverError } from '@/presentation/helpers/http/http-helper'
-import { LogErrorRepository } from '@/data/protocols/db/log/log-error-repository'
+import { LogErrorRepository } from '@/data/protocols/db/log'
 import { Controller, HttpResponse, HttpResquest } from '@/presentation/protocols'
 import { mockAccountModel, mockAddAccountWithConfirmationParams } from '../../domain/mock'
 
