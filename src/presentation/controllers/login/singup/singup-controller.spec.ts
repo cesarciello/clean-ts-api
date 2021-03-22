@@ -52,7 +52,7 @@ describe('SingUp Controller', () => {
   test('should return 200 if valid data is provide', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(okRequest({ accessToken: 'any_token' }))
+    expect(httpResponse).toEqual(okRequest({ accessToken: 'any_token', name: 'any_name' }))
   })
 
   test('should return 403 if addAccount returns null', async () => {

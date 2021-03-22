@@ -51,7 +51,7 @@ describe('LoginContorller', () => {
   test('should return 200 if Authentication aceept', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(okRequest({ accessToken: 'any_token' }))
+    expect(httpResponse).toEqual(okRequest({ accessToken: 'any_token', name: 'any_name' }))
   })
 
   test('Should call Validation with correct values', async () => {
