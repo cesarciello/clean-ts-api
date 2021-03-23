@@ -1,6 +1,5 @@
-import { AuthenticationModel } from '@/domain/models/authentication'
+import { Authentication } from '@/domain/usecases/account/authentication'
 import { Encrypter, HashComparer } from '@/data/protocols/criptography'
-import { Authentication, AuthenticationParams } from '@/domain/usecases/account/authentication'
 import { LoadAccountByEmailRepository, UpdateAccessTokenRepository } from '@/data/protocols/db/account'
 
 export class DbAuthentication implements Authentication {
@@ -12,7 +11,7 @@ export class DbAuthentication implements Authentication {
   ) {
   }
 
-  async auth(authenticationData: AuthenticationParams): Promise<AuthenticationModel> {
+  async auth(authenticationData: Authentication.Params): Promise<Authentication.Result> {
     const { email, password } = authenticationData
     const account = await this.loadAccountByEmailRepository.loadByEmail(email)
     if (account) {

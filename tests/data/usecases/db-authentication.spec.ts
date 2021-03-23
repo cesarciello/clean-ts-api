@@ -94,7 +94,7 @@ describe('Db Authentication', () => {
     await expect(authPromise).rejects.toEqual(new Error())
   })
 
-  test('should return a AuthenticationModel on success', async () => {
+  test('should return a Authentication Result on success', async () => {
     const { sut } = makeSut()
     const authenticationData = mockAuthenticationParams()
     const auth = await sut.auth(authenticationData)
