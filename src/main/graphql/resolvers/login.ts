@@ -1,10 +1,8 @@
+import { adaptResover } from '@/main/adapter/apollo'
+import { makeLoginController } from '@/main/factories/controllers/login'
+
 export default {
   Query: {
-    login() {
-      return {
-        accessToken: 'any_Token',
-        name: 'any_name'
-      }
-    }
+    login: async (parent: any, args: any) => adaptResover(makeLoginController(), args)
   }
 }
