@@ -1,8 +1,8 @@
 import MockDate from 'mockdate'
 import { mockLoadSurveysRepository } from '../mock'
-import { DbLoadSurveys } from '@/data/usecases/survey/db-load-surveys'
-import { LoadSurveysRepository } from '@/data/protocols/db/survey/load-surveys-repository'
 import { mockSurveyModelList } from '../../domain/mock'
+import { DbLoadSurveys } from '@/data/usecases/survey'
+import { LoadSurveysRepository } from '@/data/protocols/db/survey'
 
 const mockAccountId = (): string => 'any_accountId'
 

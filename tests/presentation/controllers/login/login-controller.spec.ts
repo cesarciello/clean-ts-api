@@ -1,6 +1,6 @@
-import { MissingParamError } from '@/presentation/errors'
 import { mockValidation } from '@/tests/validation/mock'
 import { mockAuthentication } from '@/tests/presentation/mock'
+import { MissingParamError } from '@/presentation/errors'
 import { Validation } from '@/presentation/protocols/validation'
 import { LoginController } from '@/presentation/controllers/login'
 import { Authentication } from '@/domain/usecases/account/authentication'

@@ -1,8 +1,8 @@
+import { Hasher } from '@/data/protocols/criptography'
+import { DbAddAccount } from '@/data/usecases/account'
+import { AddAccountRepository, CheckAccountByEmailRepository } from '@/data/protocols/db/account'
 import { mockAddAccountParams } from '../../domain/mock'
 import { mockAddAccountRepository, mockCheckAccountByEmailRepository, mockHasher } from '../mock'
-import { Hasher } from '@/data/protocols/criptography/hasher'
-import { DbAddAccount } from '@/data/usecases/account/db-add-account'
-import { AddAccountRepository, CheckAccountByEmailRepository } from '@/data/protocols/db/account'
 
 type SutTypes = {
   sut: DbAddAccount

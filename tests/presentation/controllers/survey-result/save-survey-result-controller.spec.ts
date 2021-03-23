@@ -1,11 +1,11 @@
 import MockDate from 'mockdate'
 import { LoadAnswersBySurvey } from '@/domain/usecases/survey'
+import { SaveSurveyResult } from '@/domain/usecases/survey-result/save-survey-result'
 import { InvalidParamError, MissingParamError } from '@/presentation/errors'
 import { SaveSurveyResultController } from '@/presentation/controllers/survey-result'
-import { SaveSurveyResult } from '@/domain/usecases/survey-result/save-survey-result'
 import { forbidden, okRequest, serverError } from '@/presentation/helpers/http/http-helper'
-import { mockLoadAnswersBySurveyStub, mockSaveSurveyResultStub } from '@/tests/presentation/mock'
 import { mockSurveyResultModel } from '@/tests/domain/mock'
+import { mockLoadAnswersBySurveyStub, mockSaveSurveyResultStub } from '@/tests/presentation/mock'
 
 type SutTypes = {
   sut: SaveSurveyResultController

@@ -1,9 +1,9 @@
 import MockDate from 'mockdate'
+import { mockLoadSurveyByIdRepository, mockLoadSurveyResultRepository } from '../mock'
+import { mockSurveyResultModel, mockSurveyToParseSurveyAnResult } from '../../domain/mock'
 import { DbLoadSurveyResult } from '@/data/usecases/survey-result'
 import { LoadSurveyByIdRepository } from '@/data/protocols/db/survey'
 import { LoadSurveyResultRepository } from '@/data/protocols/db/survey-result'
-import { mockLoadSurveyByIdRepository, mockLoadSurveyResultRepository } from '../mock'
-import { mockSurveyResultModel, mockSurveyToParseSurveyAnResult } from '../../domain/mock'
 
 type SutTypes = {
   sut: DbLoadSurveyResult

@@ -1,5 +1,4 @@
-import { AddAccount } from '@/domain/usecases/account/add-account'
-import { Authentication } from '@/domain/usecases/account/authentication'
+import { Authentication, AddAccount } from '@/domain/usecases/account'
 
 export const mockAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
