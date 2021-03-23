@@ -2,6 +2,7 @@ import { AddAccountRepository } from '@/data/protocols/db/account/add-account-re
 import { LoadAccountByEmailRepository } from '@/data/protocols/db/account/load-account-by-email-repository'
 import { LoadAccountByTokenRepository } from '@/data/protocols/db/account/load-account-by-token-repository'
 import { UpdateAccessTokenRepository } from '@/data/protocols/db/account/update-access-token-repository'
+import { CheckAccountByEmailRepository } from '../protocols/db/account'
 
 export const mockAddAccountRepository = (): AddAccountRepository => {
   class AddAccountRepositoryStub implements AddAccountRepository {
@@ -28,6 +29,15 @@ export const mockLoadAccountByEmailRepository = (config?: { noResponse?: boolean
     }
   }
   return new LoadAccountByEmailRepositoryStub()
+}
+
+export const mockCheckAccountByEmailRepository = (): CheckAccountByEmailRepository => {
+  class CheckcountByEmailRepositoryStub implements CheckAccountByEmailRepository {
+    async checkByEmail(email: string): Promise<CheckAccountByEmailRepository.Result> {
+      return Promise.resolve(false)
+    }
+  }
+  return new CheckcountByEmailRepositoryStub()
 }
 
 export const mockAccountByTokenRepository = (): LoadAccountByTokenRepository => {
