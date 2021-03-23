@@ -2,7 +2,7 @@ import { Collection, ObjectId } from 'mongodb'
 import { mockAddAccountParams, mockSurveyModel } from '@/tests/domain/mock'
 import { SurveyModel } from '@/domain/models/survey'
 import { SurveyResultModel } from '@/domain/models/survey-result'
-import { SaveSurveyResultParams } from '@/domain/usecases/survey-result'
+import { SaveSurveyResult } from '@/domain/usecases/survey-result'
 import { MongoHelper } from '@/infra/db/mongodb/helpers'
 import { SurveyResultMongoRepository } from '@/infra/db/mongodb/survey-result'
 
@@ -10,7 +10,7 @@ const makeSut = (): SurveyResultMongoRepository => {
   return new SurveyResultMongoRepository()
 }
 
-const makeFakeSaveSurveyData = (accountId: string, surveyId: string, answer: string): SaveSurveyResultParams => ({
+const makeFakeSaveSurveyData = (accountId: string, surveyId: string, answer: string): SaveSurveyResult.Params => ({
   accountId,
   answer,
   date: new Date(),

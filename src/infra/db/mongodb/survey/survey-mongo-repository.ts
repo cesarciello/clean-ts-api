@@ -57,7 +57,6 @@ export class SurveyMongoRepository implements AddSurveyRepository, LoadSurveysRe
       })
       .build()
     const surveys = await surveyCollection.aggregate(query).toArray()
-    console.log(surveys)
     return surveys[0]?.answers || []
   }
 

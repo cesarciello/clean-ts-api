@@ -62,7 +62,6 @@ describe('Account MongoDB Repository', () => {
       await makeSurveyResult(survey._id, accountId, survey.answers[0].answer)
       const surveys = await sut.loadAll(accountId)
 
-      console.log(surveys)
       expect(surveys.length).toBe(2)
       expect(surveys[0].id).toBeTruthy()
       expect(surveys[0].question).toBe('any_question')
