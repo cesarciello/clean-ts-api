@@ -1,5 +1,4 @@
 import { MongoHelper } from '../helpers/mongo-helper'
-import { AccountModel } from '@/domain/models/account'
 import { AddAccountRepository, UpdateAccessTokenRepository, LoadAccountByTokenRepository, LoadAccountByEmailRepository } from '@/data/protocols/db/account'
 
 export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository, LoadAccountByTokenRepository {
@@ -9,7 +8,7 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
     return MongoHelper.map(result.ops[0])
   }
 
-  async loadByEmail(email: string): Promise<AccountModel> {
+  async loadByEmail(email: string): Promise<LoadAccountByEmailRepository.Result> {
     const accountCollection = await MongoHelper.getCollection('account')
     const account = await accountCollection.findOne({ email })
     return account && MongoHelper.map(account)
@@ -24,9 +23,9 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
     })
   }
 
-  async loadByToken(accessToken: string, role?: string): Promise<AccountModel> {
+  async loadByToken(accessToken: string, role?: string): Promise<LoadAccountByTokenRepository.Result> {
     const accountCollection = await MongoHelper.getCollection('account')
-    const account = await accountCollection.findOne({ accessToken, $or: [{ role }, { role: 'admin' }] })
+    const account = await accountCollection.findOne({ accessToken, $or: [{ role }, { role: 'admin' }] }, { projection: { _id: 1 } })
     return account && MongoHelper.map(account)
   }
 }

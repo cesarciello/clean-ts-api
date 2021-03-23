@@ -1,4 +1,3 @@
-import { AccountModel } from '@/domain/models/account'
 import { Decrypter } from '@/data/protocols/criptography'
 import { LoadAccountByToken } from '@/domain/usecases/account'
 import { LoadAccountByTokenRepository } from '@/data/protocols/db/account'
@@ -9,7 +8,7 @@ export class DbLoadAccountByToken implements LoadAccountByToken {
     private readonly loadAccountByTokenRepository: LoadAccountByTokenRepository
   ) { }
 
-  async loadByToken(accessToken: string, role?: string): Promise<AccountModel> {
+  async loadByToken(accessToken: string, role?: string): Promise<LoadAccountByToken.Result> {
     let token: string
     try {
       token = await this.decrypter.decrypt(accessToken)
