@@ -6,9 +6,8 @@ import { Collection } from 'mongodb'
 import { MongoHelper } from '@/infra/db/mongodb/helpers'
 import { SurveyModel } from '@/domain/models/survey'
 import { SurveyResultModel } from '@/domain/models/survey-result'
-import { AccountModel } from '@/domain/models/account'
 
-const makeFakeAccount = async (): Promise<AccountModel & { accessToken: string }> => {
+const makeFakeAccount = async (): Promise<{ accessToken: string, id: string }> => {
   const { ops: [account] } = await accountCollection.insertOne({
     name: 'Gabriel Maddox',
     email: 'maddox.gab@gmail.com',
@@ -18,7 +17,7 @@ const makeFakeAccount = async (): Promise<AccountModel & { accessToken: string }
   await accountCollection.updateOne({ _id: account._id }, { $set: { accessToken } })
   const parsedAccount = MongoHelper.map(account)
   return {
-    ...parsedAccount,
+    id: parsedAccount.id,
     accessToken
   }
 }
