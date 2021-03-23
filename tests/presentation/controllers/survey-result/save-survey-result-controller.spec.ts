@@ -1,5 +1,4 @@
 import MockDate from 'mockdate'
-import { HttpResquest } from '@/presentation/protocols'
 import { LoadSurveyById } from '@/domain/usecases/survey'
 import { InvalidParamError, MissingParamError } from '@/presentation/errors'
 import { SaveSurveyResultController } from '@/presentation/controllers/survey-result'
@@ -14,13 +13,9 @@ type SutTypes = {
   saveSurveyResultStub: SaveSurveyResult
 }
 
-const mockRequest: HttpResquest = {
-  params: {
-    surveyId: 'any_survey_id'
-  },
-  body: {
-    answer: 'any_answer'
-  },
+const mockRequest: SaveSurveyResultController.Request = {
+  surveyId: 'any_survey_id',
+  answer: 'any_answer',
   accountId: 'any_accountId'
 }
 
@@ -68,12 +63,9 @@ describe('SaveSurveyresultController', () => {
   test('should return 403 if invalid answer is provided', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle({
-      params: {
-        surveyId: 'any_survey_id'
-      },
-      body: {
-        answer: 'wrong_answer'
-      }
+      surveyId: 'any_survey_id',
+      answer: 'wrong_answer',
+      accountId: 'any_accountId'
     })
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('answer')))
   })
@@ -81,10 +73,8 @@ describe('SaveSurveyresultController', () => {
   test('should call SaveSurveyResult with correct values', async () => {
     const { sut, saveSurveyResultStub } = makeSut()
     const saveSpy = jest.spyOn(saveSurveyResultStub, 'save')
-    const { params, body, accountId } = mockRequest
-    const saveSurveyResult = Object.assign({}, body, params, { accountId }, { date: new Date() })
     await sut.handle(mockRequest)
-    expect(saveSpy).toHaveBeenCalledWith(saveSurveyResult)
+    expect(saveSpy).toHaveBeenCalledWith({ ...mockRequest, date: new Date() })
   })
 
   test('should return 500 with SaveSurveyResult throws', async () => {

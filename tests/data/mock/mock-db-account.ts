@@ -1,0 +1,52 @@
+import { AccountModel } from '@/domain/models/account'
+import { AddAccountRepository } from '@/data/protocols/db/account/add-account-repository'
+import { LoadAccountByEmailRepository } from '@/data/protocols/db/account/load-account-by-email-repository'
+import { LoadAccountByTokenRepository } from '@/data/protocols/db/account/load-account-by-token-repository'
+import { UpdateAccessTokenRepository } from '@/data/protocols/db/account/update-access-token-repository'
+import { mockAccountModel } from '../../domain/mock'
+
+export const mockAddAccountRepository = (): AddAccountRepository => {
+  class AddAccountRepositoryStub implements AddAccountRepository {
+    async add(accountData: AddAccountRepository.Params): Promise<AddAccountRepository.Result> {
+      return Promise.resolve(mockAccountModel())
+    }
+  }
+
+  return new AddAccountRepositoryStub()
+}
+
+export const mockLoadAccountByEmailRepository = (config?: { noResponse?: boolean }): LoadAccountByEmailRepository => {
+  class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
+    async loadByEmail(email: string): Promise<AccountModel> {
+      let account: AccountModel = {
+        id: 'any_id',
+        email: 'any_mail@mail.com',
+        name: 'any_name',
+        password: 'hash_password'
+      }
+      if (config?.noResponse) {
+        account = null
+      }
+      return Promise.resolve(account)
+    }
+  }
+  return new LoadAccountByEmailRepositoryStub()
+}
+
+export const mockAccountByTokenRepository = (): LoadAccountByTokenRepository => {
+  class LoadAccountByTokenRepositoryStub implements LoadAccountByTokenRepository {
+    async loadByToken(token: string, role?: string): Promise<AccountModel> {
+      return Promise.resolve(mockAccountModel())
+    }
+  }
+  return new LoadAccountByTokenRepositoryStub()
+}
+
+export const mockUpdateAccessTokenRepository = (): UpdateAccessTokenRepository => {
+  class UpdateAccessTokenRepositoryStub implements UpdateAccessTokenRepository {
+    async updateAccessToken(id: string, token: string): Promise<void> {
+      return Promise.resolve()
+    }
+  }
+  return new UpdateAccessTokenRepositoryStub()
+}

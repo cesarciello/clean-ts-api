@@ -1,12 +1,10 @@
-import { SignUpController } from '@/presentation/controllers/login'
-import { HttpResquest } from '@/presentation/protocols'
-import { Validation } from '@/presentation/protocols/validation'
+import { mockValidation } from '@/tests/validation/mock'
+import { mockAddAccount, mockAuthentication } from '@/tests/presentation/mock'
 import { AddAccount, Authentication } from '@/domain/usecases/account'
+import { Validation } from '@/presentation/protocols/validation'
+import { SignUpController } from '@/presentation/controllers/login'
 import { EmailInUseError, MissingParamError, ServerError } from '@/presentation/errors'
 import { badResquest, forbidden, okRequest, serverError } from '@/presentation/helpers/http/http-helper'
-import { mockAddAccountWithConfirmationParams } from '../../../../domain/mock'
-import { mockAddAccount, mockAuthentication } from '@/tests/presentation/mock'
-import { mockValidation } from '@/tests/validation/mock'
 
 type SutTypes = {
   sut: SignUpController
@@ -28,7 +26,12 @@ const makeSut = (): SutTypes => {
   }
 }
 
-const mockRequest = (): HttpResquest => ({ body: mockAddAccountWithConfirmationParams() })
+const mockRequest = (): SignUpController.Request => ({
+  name: 'any_name',
+  email: 'any_mail@mail.com',
+  password: 'any_password',
+  passwordConfirmation: 'any_password'
+})
 
 describe('SingUp Controller', () => {
   test('should return 500 if AddAccount throws', async () => {
@@ -65,9 +68,9 @@ describe('SingUp Controller', () => {
   test('Should call Validation with correct values', async () => {
     const { sut, validationStub } = makeSut()
     const validateSpy = jest.spyOn(validationStub, 'validate')
-    const httpResquest = mockRequest()
-    await sut.handle(httpResquest)
-    expect(validateSpy).toHaveBeenCalledWith(httpResquest.body)
+    const resquest = mockRequest()
+    await sut.handle(resquest)
+    expect(validateSpy).toHaveBeenCalledWith(resquest)
   })
 
   test('Should return 400 if Validation returns an error', async () => {

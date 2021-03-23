@@ -1,6 +1,5 @@
 
 import MockDate from 'mockdate'
-import { HttpResquest } from '@/presentation/protocols'
 import { InvalidParamError } from '@/presentation/errors'
 import { LoadSurveyById } from '@/domain/usecases/survey'
 import { LoadSurveyResultController } from '@/presentation/controllers/survey-result'
@@ -9,10 +8,8 @@ import { forbidden, okRequest, serverError } from '@/presentation/helpers/http/h
 import { mockLoadSurveyByIdStub, mockLoadSurveyResult } from '@/tests/presentation/mock'
 import { mockSurveyResultModel } from '@/tests/domain/mock'
 
-const mockRequest: HttpResquest = {
-  params: {
-    surveyId: 'any_survey_id'
-  },
+const mockRequest: LoadSurveyResultController.Request = {
+  surveyId: 'any_survey_id',
   accountId: 'any_accountId'
 }
 

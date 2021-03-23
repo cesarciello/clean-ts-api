@@ -1,5 +1,5 @@
 import { AccountModel } from '@/domain/models/account'
-import { AddAccountParams, AuthenticationParams } from '@/domain/usecases/account'
+import { AddAccount, AuthenticationParams } from '@/domain/usecases/account'
 
 export const mockAccountModel = (): AccountModel => (
   {
@@ -10,7 +10,7 @@ export const mockAccountModel = (): AccountModel => (
   }
 )
 
-export const mockAddAccountParams = (): AddAccountParams => (
+export const mockAddAccountParams = (): AddAccount.Params => (
   {
     name: 'any_name',
     email: 'any_email@mail.com',
@@ -18,7 +18,7 @@ export const mockAddAccountParams = (): AddAccountParams => (
   }
 )
 
-export const mockAddAccountWithConfirmationParams = (): AddAccountParams & { passwordConfirmation: string } => (
+export const mockAddAccountWithConfirmationParams = (): AddAccount.Params & { passwordConfirmation: string } => (
   {
     name: 'any_name',
     email: 'any_mail@mail.com',
@@ -27,7 +27,7 @@ export const mockAddAccountWithConfirmationParams = (): AddAccountParams & { pas
   }
 )
 
-export const mockAddAccountWitkTokenParams = (): AddAccountParams & { accessToken: string } => (
+export const mockAddAccountWitkTokenParams = (): AddAccount.Params & { accessToken: string } => (
   {
     name: 'any_name',
     email: 'any_email@mail.com',
@@ -36,7 +36,7 @@ export const mockAddAccountWitkTokenParams = (): AddAccountParams & { accessToke
   }
 )
 
-export const mockAddAccountWitkTokenAndRoleParams = (): AddAccountParams & { accessToken: string, role: string } => (
+export const mockAddAccountWitkTokenAndRoleParams = (): AddAccount.Params & { accessToken: string, role: string } => (
   {
     name: 'any_name',
     email: 'any_email@mail.com',
