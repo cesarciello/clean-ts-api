@@ -1,5 +1,4 @@
 import { mockSurveyModel, mockSurveyModelList } from '../../domain/mock'
-import { SurveyModel } from '@/domain/models/survey'
 import { AddSurvey, CheckSurveyById, LoadAnswersBySurvey, LoadSurveys } from '@/domain/usecases/survey'
 
 export const mockAddSurvey = (): any => {
@@ -32,7 +31,7 @@ export const mockCheckSurveyByIdStub = (): CheckSurveyById => {
 
 export const mockLoadSurveys = (): LoadSurveys => {
   class LoadSurveysStub implements LoadSurveys {
-    async load(): Promise<SurveyModel[]> {
+    async load(): Promise<LoadSurveys.Result> {
       return Promise.resolve(mockSurveyModelList())
     }
   }
