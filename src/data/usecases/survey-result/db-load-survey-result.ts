@@ -1,7 +1,7 @@
 import { SurveyResultModel } from '@/domain/models/survey-result'
 import { LoadSurveyResult } from '@/domain/usecases/survey-result'
-import { LoadSurveyResultRepository } from '@/data/protocols/db/survey-result'
 import { LoadSurveyByIdRepository } from '@/data/protocols/db/survey'
+import { LoadSurveyResultRepository } from '@/data/protocols/db/survey-result'
 
 export class DbLoadSurveyResult implements LoadSurveyResult {
   constructor(

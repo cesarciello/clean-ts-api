@@ -1,6 +1,6 @@
-import { SurveyModel } from '@/domain/models/survey'
 import { mockSurveyModel, mockSurveyModelList } from '../../domain/mock'
-import { AddSurvey, LoadSurveyById, LoadSurveys } from '@/domain/usecases/survey'
+import { SurveyModel } from '@/domain/models/survey'
+import { AddSurvey, CheckSurveyById, LoadAnswersBySurvey, LoadSurveys } from '@/domain/usecases/survey'
 
 export const mockAddSurvey = (): any => {
   class AddSurveyStub implements AddSurvey {
@@ -11,13 +11,23 @@ export const mockAddSurvey = (): any => {
   return new AddSurveyStub()
 }
 
-export const mockLoadSurveyByIdStub = (): LoadSurveyById => {
-  class LoadSurveyByIdStub implements LoadSurveyById {
-    async loadById(id: string): Promise<SurveyModel> {
-      return Promise.resolve(mockSurveyModel())
+
+export const mockLoadAnswersBySurveyStub = (): LoadAnswersBySurvey => {
+  class LoadAnswersBySurveyStub implements LoadAnswersBySurvey {
+    async loadAnswers(id: string): Promise<LoadAnswersBySurvey.Result> {
+      return Promise.resolve(mockSurveyModel().answers.map(a => a.answer))
     }
   }
-  return new LoadSurveyByIdStub()
+  return new LoadAnswersBySurveyStub()
+}
+
+export const mockCheckSurveyByIdStub = (): CheckSurveyById => {
+  class CheckSurveyByIdStub implements CheckSurveyById {
+    async checkById(id: string): Promise<CheckSurveyById.Result> {
+      return Promise.resolve(true)
+    }
+  }
+  return new CheckSurveyByIdStub()
 }
 
 export const mockLoadSurveys = (): LoadSurveys => {

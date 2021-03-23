@@ -95,4 +95,20 @@ describe('Account MongoDB Repository', () => {
       expect(survey).toEqual(null)
     })
   })
+
+  describe('checkById survey', () => {
+    test('should return true if exist survey', async () => {
+      const sut = makeSut()
+      const res = await surveyCollection.insertOne(mockAddSurveyParams())
+      const { ops: [{ _id }] } = res
+      const hasSurvey = await sut.checkById(_id)
+      expect(hasSurvey).toBe(true)
+    })
+
+    test('should return false if no exist survey with provided id', async () => {
+      const sut = makeSut()
+      const survey = await sut.checkById(new ObjectId().toHexString())
+      expect(survey).toEqual(false)
+    })
+  })
 })
