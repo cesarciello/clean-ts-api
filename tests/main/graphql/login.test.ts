@@ -65,14 +65,14 @@ describe('Login GraphQL', () => {
 
   describe('SingUp Mutation', () => {
     const singupMutation = gql`
-      mutation singup ($name: String!, $email: String!, $password: String!, $passwordConfirmation: String!){
-        login(name: $name, email: $email, password: $password, passwordConfirmation: $passwordConfirmation) {
+      mutation singUp ($name: String!, $email: String!, $password: String!, $passwordConfirmation: String!){
+        singUp(name: $name, email: $email, password: $password, passwordConfirmation: $passwordConfirmation) {
           accessToken,
           name
         }
       }
     `
-    test('should return an Account on  valid credentials', async () => {
+    test('should return an Account on success create', async () => {
       const { mutate } = createTestClient({ apolloServer })
       const res: any = await mutate(singupMutation, {
         variables: {
@@ -82,8 +82,9 @@ describe('Login GraphQL', () => {
           passwordConfirmation: '123'
         }
       })
-      expect(res.data.singup.accessToken).toBeTruthy()
-      expect(res.data.singup.name).toBe('Gabriel Maddox')
+      console.log(JSON.stringify(res))
+      expect(res.data.singUp.accessToken).toBeTruthy()
+      expect(res.data.singUp.name).toBe('Gabriel Maddox')
     })
   })
 })
