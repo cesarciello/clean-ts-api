@@ -141,4 +141,73 @@ describe('Survey GraphQL', () => {
       expect(res.errors[0].message).toBe('Access Denied')
     })
   })
+
+  describe('Survey Result Mutation', () => {
+    const saveSurveyResultMutation = gql`
+      mutation saveSurveyResult($surveyId: String!, $answer: String!) {
+        saveSurveyResult(surveyId: $surveyId, answer: $answer) {
+          surveyId,
+          question,
+          answers {
+            image,
+            answer,
+            count,
+            percent,
+            isCurrentAccountAnswer
+          },
+          date
+        }
+      }
+    `
+    test('should return an Surveys on create an response', async () => {
+      const account = await makeFakeAccount()
+      const survey = await makeFakeSurvey()
+
+      const { mutate } = createTestClient({
+        apolloServer,
+        extendMockRequest: {
+          headers: {
+            'x-access-token': account.accessToken
+          }
+        }
+      })
+      const res: any = await mutate(saveSurveyResultMutation, {
+        variables: {
+          surveyId: survey.id.toString(),
+          answer: 'any_answer'
+        }
+      })
+      console.log(JSON.stringify(res))
+      expect(res.data.saveSurveyResult.surveyId).toBeTruthy()
+      expect(res.data.saveSurveyResult.question).toBe('any_question')
+      expect(res.data.saveSurveyResult.answers).toEqual([
+        {
+          image: 'any_image',
+          answer: 'any_answer',
+          count: 1,
+          percent: 100,
+          isCurrentAccountAnswer: true
+        },
+        {
+          image: null,
+          answer: 'other_answer',
+          count: 0,
+          percent: 0,
+          isCurrentAccountAnswer: false
+        }
+      ])
+    })
+
+    test('should return an AccessDeniedError on invalid credentials', async () => {
+      const { mutate } = createTestClient({ apolloServer })
+      const res: any = await mutate(saveSurveyResultMutation, {
+        variables: {
+          surveyId: new ObjectId().toHexString().toString(),
+          answer: 'any_answer'
+        }
+      })
+      expect(res.data).toBeFalsy()
+      expect(res.errors[0].message).toBe('Access Denied')
+    })
+  })
 })

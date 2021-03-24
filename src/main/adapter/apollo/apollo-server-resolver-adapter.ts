@@ -22,8 +22,8 @@ const httpResponseCases = {
   }
 }
 
-export const adaptResover = async (controller: Controller, args?: any): Promise<any> => {
-  const request = { ...(args || {}) }
+export const adaptResover = async (controller: Controller, args?: any, context?: any): Promise<any> => {
+  const request = { ...(args || {}), accountId: context?.req?.accountId }
   const httpResponse = await controller.handle(request)
   return httpResponseCases[httpResponse.statusCode](httpResponse)
 }
